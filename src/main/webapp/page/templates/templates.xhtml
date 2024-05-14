@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//FR" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:view contentType="text/html">
+        <h:head >
+            <title>
+                <ui:insert name="Title" />
+            </title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <h:outputStylesheet  name="css/style.css"/>
+            <h:outputStylesheet  name="css/icon-font.min.css"/> 
+            <h:outputStylesheet  name="css/bootstrap.css"/> 
+            <h:outputStylesheet  name="css/layout.css"/> 
+            <h:outputScript  name="js/bootstrap.min.js"/> 
+            <h:outputScript  name="js/sidebar.js" /> 
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </h:head>
+        <h:body style="	font-family: Nunito !important;font-size: 12px !important;padding-bottom: 30px">
+            <ui:include src="header.xhtml" />
+            <p:outputPanel id="body-center">
+                <div class="page-wrapper chiller-theme toggled" >
+                    <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+                        <i class="fas fa-bars" />
+                    </a>
+                    <nav id="sidebar" class="sidebar-wrapper">
+
+                        <div class="sidebar-content">
+
+                            <div class="sidebar-brand">
+                                <a href="#">pro sidebar</a>
+                            </div>
+
+                            <div class="sidebar-menu">
+                                <ul>
+                                    <li class="header-menu">
+                                        <span>Menu</span>
+                                    </li>
+                                    <li  class="#{view.viewId == '/page/acceuil.xhtml'  ? 'active-menu' : ''}">
+                                        <p:link href="/pages/acceuil.xhtml" >
+                                            <i class="fa fa-user-plus" style="color:#0F3284 !important" />
+                                            <span>Liste Patient</span>
+                                        </p:link>
+                                    </li>
+                                    <li>
+                                        <p:link href="/page/acceuil.xhtml" >
+                                            <i class="fa fa-folder-o" style="color:#0F3284 !important" />
+                                            <span>Liste Dossier</span>
+                                        </p:link>
+                                    </li>
+                                    <li>
+                                        <p:link href="/page/acceuil.xhtml" >
+                                            <i class="fa fa-calendar-o" style="color:#0F3284 !important" />
+                                            <span>Liste Rendez-Vous</span>
+                                        </p:link>
+                                    </li>
+                                    <li >
+                                        <p:link href="/page/acceuil.xhtml">
+                                            <i class="fa fa-folder-o" style="color:#0F3284 !important" />
+                                            <span>Médicament</span>
+                                        </p:link>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- sidebar-menu  -->
+                        </div>
+                    </nav>
+                    <!-- sidebar-wrapper  -->
+                    <main class="page-content">
+                        <ui:insert name="MyContent"/>
+                        <p:growl id="messages" showDetail="true" >
+                            <p:autoUpdate />
+                        </p:growl>
+                    </main>
+                </div>
+
+            </p:outputPanel>
+            <p:blockUI block="body-center" widgetVar="bodyUIBlock">
+                Chargement en cours 
+                <br />
+                <p:graphicImage value="#{resource['img/gears.gif']}" width="50" />
+            </p:blockUI>
+            <p:ajaxStatus style="width:90px;height:40px;position:fixed;right:0px;bottom: 55px">
+                <f:facet name="start">
+                    <p:graphicImage value="#{resource['img/gears.gif']}" width="60" />
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+
+            <p:confirmDialog  global="true" width="400" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close"/>
+            </p:confirmDialog>
+            <div class="footer-apps">
+                <ui:include src="footer.xhtml" />
+            </div>
+
+            <style type="text/css">
+                a:hover, a:visited, a:link, a:active{
+                    text-decoration: none;
+                }
+
+            </style>
+        </h:body>
+    </f:view>
+</html>

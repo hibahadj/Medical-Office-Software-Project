@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <footer  class="footer">
+        <div class="container">
+            <p class="text-muted"><span class="etravel-footer-style">          
+                    <p:outputLabel
+                        value=" eTabib - " /> <p:outputLabel styleClass="label-style" value=" V 1.0.0 " style="font-weight: 600; margin-left: 3px"/>
+                </span>          <p:outputLabel id="copyrightLabel" value="Copyright GROUPE 8- " />
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Get the current year
+        var currentYear = new Date().getFullYear();
+
+        // Update the copyright label with the current year
+        document.getElementById("copyrightLabel").innerText += currentYear;
+    </script>
+</ui:composition> 

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+<title>LogIn</title>
+<!-- custom-theme -->
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- //custom-theme -->
+<link href="#{request.contextPath}/resources/css/styleAcceuil.css" rel="stylesheet" type="text/css" />
+
+
+
+    
+    </h:head>
+    <h:body>
+	<div class="main"  style="padding-top:20px">	
+		<div class="w3layouts_main agileinfo w3"  style="padding-top:20px">		
+			<div class="w3_agile_signup_form agileits" style="padding-top:25px">
+				<h1 class="w3_agileits w3ls">eTabib</h1>
+				<h2 class="wthree">Gestion Cabinet Médical</h2>
+				<div class="agile_login_form" >
+					<form name="formLogin"  id="LoginForm" action="j_security_check" method="POST" class="agileits_w3layouts_form">
+            					<input type="text" name="j_username" placeholder="Nom d'utilisateur" required="true"/>
+						<input type="password" name="j_password" placeholder="Mot de passe" required="true"/>
+						<input type="submit" value="S'authentifier"/>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="agileits_copyright w3l">
+			<p>© ACAD C 2024</p>
+		</div>
+	</div>
+       
+     
+      
+           
+</h:body>
+</html>

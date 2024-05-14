@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>En Cours de dev</title>
+
+        <h:outputStylesheet library="css" name="css-erreur/bootstrap.css" />
+        <h:outputStylesheet library="css" name="css-erreur/bootstrap-responsive.css" />        
+        <h:outputStylesheet library="css" name="css-erreur/style.css" />
+        <h:outputScript library="js" name="script.js" target="body"/>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            });
+        </script>
+    </h:head>
+    <h:body styleClass="body-500" onload="changeHashOnLoad();">
+
+        <div class="error-head"> </div>
+
+        <div class="container ">
+
+            <section class="error-wrapper text-center">
+                <h1><h:graphicImage value="#{resource['images/icon_error_silver.png']}" width="200" height="200"/></h1>
+                <div class="error-desk">
+                    <h4>En Cours de développement!!!</h4><br/>
+                    <p class="nrml-txt-alt">Désolé, cette fonctionnalité est sous </p><br/><p class="nrml-txt-alt"> développement.</p> 
+
+                </div>
+                <p:link value="Retour" styleClass="back-btn"  outcome="accueil" >
+
+                    <i class="fa fa-home"></i> </p:link>
+            </section>
+        </div>
+
+    </h:body>
+</html>
+

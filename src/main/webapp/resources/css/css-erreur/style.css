@@ -1,0 +1,122 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 oct. 2014, 11:28:45
+    Author     : chekor.samir
+*/
+.row-1{
+    background-repeat:repeat-x;
+    height:45px; 
+    padding:15px 0 15px 15px; 
+    color:#FFF; 
+    font-size:16px;
+}
+.row-2{
+    float:left;
+    padding-top:27px; 
+    padding-left:10px;
+}
+.row-3{
+    font-family:Verdana, Geneva, sans-serif;
+    font-size:20px;
+}
+.row-4{
+    padding-top:15px; 
+    font-size:25px;
+}
+.row-5{
+    padding-top:15px;
+}
+.row-6{
+    background-color:#F4F4F4;
+}
+.row-7{
+    padding-top:10px;
+}
+.row-8{
+    padding:10px 0 10px 0;
+}
+.row-9{
+    color:#CCCCCC;
+}
+
+/*error pages*/
+
+.error-head {
+    background:#fff;
+    height:280px;
+}
+.error-wrapper {
+    text-align:center;
+}
+.error-wrapper h1 {
+    font-size:90px;
+    font-weight:300;
+    margin:-141px 0 0 0;
+    text-align:center;
+}
+.error-wrapper h2 {
+    font-size:58px;
+    font-weight:300;
+    margin:0;
+    text-transform:uppercase;
+}
+.error-desk {
+    background:rgba(0,0,0,0.05);
+    margin-top:-27px;
+    padding:30px 0;
+}
+.error-wrapper p,.error-wrapper p a {
+    font-size:18px;
+    font-weight:300;
+    margin:0;
+}
+.error-wrapper p.nrml-txt {
+    color:#03f1e4;
+    font-size:40px;
+    margin:0;
+}
+.back-btn,.back-btn:hover {
+    border:1px solid rgba(255,255,255,.5);
+    padding:10px 15px;
+    margin-top:100px;
+    display:inline-block;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    color:#fff;
+    font-size:16px;
+    font-weight:300;
+}
+.back-btn:hover {
+    background:#fff;
+    color: #02a9a0;
+}
+/*500 page*/
+.body-500 {
+    background:#7da7d5;
+    color:#fff;
+}
+.error-wrapper p.page-500 {
+    color:#afa5f1;
+}
+.body-500 .back-btn:hover {
+    background:#fff;
+    color:#a48ad4;
+}
+.error-wrapper p.nrml-txt-alt {
+    color:#fff;
+    font-size:34px;
+    margin:0;
+    text-transform:uppercase;
+}
+.sp-link,.sp-link:hover {
+    color:#ffef3b;
+    text-decoration:underline;
+}
+.sp-link:hover {
+    text-decoration: none;
+}
+

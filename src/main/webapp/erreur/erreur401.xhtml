@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Erreur 401</title>
+    </h:head>
+    <h:body onload="changeHashOnLoad();" style="border-top: 8px solid #1f89ce;top:0px;width: 100%;margin-top: -1px;margin-left: -1px;background: rgb(247, 247, 247)">
+<script language="javascript">
+    window.location.href = "#{request.contextPath}/index.jsp"
+</script>
+        <br/>
+        <br/>
+        <center>
+            <p:panel style="border: none;background: transparent;width: 50%"
+                     styleClass="exception-panel">
+                <i class="fa fa-question-circle-o" aria-hidden="true" style="color: #474747;font-size: 60px"></i>
+                <br/>
+                <hr/>
+                <br/>
+                <br/>
+                <span style="color: #474747;font-size: 60px;font-weight: 900">401 Unauthorized</span>
+                <br/>
+                <br/>
+                <br/>
+                <span style="color: #474747;">The request has not been applied because it lacks valid authentication credentials for the target resource.. </span>
+                <br/>
+                <br/>
+                <br/>
+                <p:button value="Go to Home" icon="fa fa-arrow-left" iconPos="left" style="font-weight: 200 !important;font-size: 12px;" outcome="accueil"/>
+
+            </p:panel></center>
+
+
+    </h:body>
+
+</html>
+

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Erreur 500</title>
+
+        <h:outputStylesheet library="css" name="css-erreur/bootstrap.css" />
+        <h:outputStylesheet library="css" name="css-erreur/bootstrap-responsive.css" />
+        <h:outputStylesheet library="css" name="css-erreur/style.css" />
+        <h:outputScript library="js" name="script.js" target="body"/>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            });
+        </script>
+    </h:head>
+    <h:body styleClass="body-500">
+
+        <div class="error-head"> </div>
+
+        <div class="container ">
+
+            <section class="error-wrapper text-center">
+                <h1><h:graphicImage value="#{resource['images/images-erreur/500.png']}"/></h1>
+                <div class="error-desk">
+                    <h4>!!!</h4><br/>
+                    <p class="nrml-txt-alt">QUELQUE-CHOSE S'EST MAL PASSÉ.</p>
+
+                </div>
+                <p:link value="Retour" styleClass="back-btn"  outcome="index" >
+
+                    <i class="fa fa-home"></i> </p:link>
+            </section>
+        
+        </div>
+
+    </h:body>
+</html>
+

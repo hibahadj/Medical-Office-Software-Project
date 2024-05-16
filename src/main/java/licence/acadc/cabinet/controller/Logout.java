@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
     }
 
     public String deconnection() throws ServletException {
-        System.out.println ("hiba");
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
             externalContext.invalidateSession();

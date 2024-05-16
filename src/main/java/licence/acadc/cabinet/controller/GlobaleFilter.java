@@ -15,14 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebFilter(filterName = "NavigationFilter", urlPatterns = {"/page/*"}, dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.ERROR, DispatcherType.REQUEST})
-public class NavigationFilter implements Filter {
+public class GlobaleFilter implements Filter {
 
     private static final String LOGIN_PAGE = "/login.xhtml";
     //private static final String ERROR_PAGE = "/pages/erreur/erreur403.xhtml";
 
     private FilterConfig filterConfig = null;
 
-    public NavigationFilter() {
+    public GlobaleFilter() {
     }
 
     @Override

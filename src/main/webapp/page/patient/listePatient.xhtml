@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="../templates/templates.xhtml">
+        <ui:define name="Title">
+            Liste des Patient
+        </ui:define>
+        <ui:define name="MyContent">
+            <p:panel id="globalPanel" styleClass="globalPanelStyle">
+                <div class="panel-heading"><i class="fa fa-table"></i> - Liste des Patient
+                </div>       
+                <h:form id="mainForm" prependId="false">
+
+                    <p:toolbar style="border-bottom: none;">
+                        <f:facet name="left">
+                            <p:commandButton value="Import" icon="ui-icon-plus" onclick="PF('logoDlg').show();"  process="@this"/>
+                            <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                            </span>
+                        </f:facet>
+                    </p:toolbar>
+
+                    <p:dataTable value="#{patientController.listAll}" var="current" id="patientTable" widgetVar="patientTable" 
+                                 selection="#{patientController.entity}" rowKey="#{current.patId}" selectionMode="single"
+                                 editable="true" paginator="true" rows="5"
+                                 emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
+                                 rowsPerPageTemplate="5,10,15,20,50,100"
+                                 styleClass="table-condensed" >
+                        <p:ajax event="rowEdit" listener="#{patientController.onRowEditPatient}"  update="@widgetVar(patientTable)"/>
+                        <p:ajax event="rowSelect" listener="#{patientController.onRowSelect}" update=""/>
+                        <f:facet name="header">
+                            <i class="fa fa-table" /> <h:outputText value="Liste des Patient" /> 
+                        </f:facet>     
+                        <p:column headerText="Wilayas" filterBy="#{current.patId}" filterMatchMode="contains" sortBy="#{current.patId}">
+                            <h:outputText value="#{current.patId}" />
+                        </p:column>
+
+                        <p:column headerText="Ville" filterBy="#{current.patNome}" filterMatchMode="contains" sortBy="#{current.patNome}">
+                            <h:outputText value="#{current.patNome}" />
+                        </p:column>
+
+                        <p:column headerText="Order" filterBy="#{current.patAddress}" filterMatchMode="contains"
+                                  sortBy="#{current.patAddress}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.patAddress}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{current.patAddress}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column width="8%" headerText="Action" style="text-align: center" exportable="false">
+                            <f:facet name="header">
+                                <i class="fa fa-pencil" style="color: #999" />
+                            </f:facet>
+                            <p:rowEditor/>
+                        </p:column>
+
+                        <p:column width="8%" style="text-align: center" exportable="false">
+                            <f:facet name="header">
+                                <i class="fa fa-trash" style="color: #999"/>
+                            </f:facet>
+                            <p:commandButton icon="fa fa-trash" action="#{patientController.removePatient}" update="@widgetVar(patientTable)">
+                                <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
+                                <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:panel>
+        </ui:define>
+
+
+    </ui:composition>
+</html>

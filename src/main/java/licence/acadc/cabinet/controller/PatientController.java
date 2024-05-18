@@ -10,12 +10,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import licence.acadc.cabinet.modele.entity.Patient;
-import licence.acadc.cabinet.modele.facade.PatientFacade;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.file.UploadedFile;
+
+import licence.acadc.cabinet.modele.entity.Patient;
+import licence.acadc.cabinet.modele.facade.PatientFacade;
 
 @Named
 @ViewScoped
@@ -47,10 +48,12 @@ public class PatientController implements Serializable {
     }
 
     public void onRowEditPatient(RowEditEvent event) {
+        patientFacade.edit(entity);
+        
     }
 
     public void removePatient() throws Exception {
-
+        patientFacade.remove(entity);
     }
 
     public void uploadPatient(FileUploadEvent event) {

@@ -7,11 +7,11 @@
       xmlns:p="http://primefaces.org/ui">
     <ui:composition template="../templates/templates.xhtml">
         <ui:define name="Title">
-            Liste des Patient
+            Liste de Patients
         </ui:define>
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
-                <div class="panel-heading"><i class="fa fa-table"></i> - Liste des Patient
+                <div class="panel-heading"><i class="fa fa-table"></i> - Liste de Patients
                 </div>       
                 <h:form id="mainForm" prependId="false">
 
@@ -36,22 +36,26 @@
                         <f:facet name="header">
                             <i class="fa fa-table" /> <h:outputText value="Liste des Patient" /> 
                         </f:facet>     
-                        <p:column headerText="Wilayas" filterBy="#{current.patId}" filterMatchMode="contains" sortBy="#{current.patId}">
+                        <p:column headerText="ID Patient" filterBy="#{current.patId}" filterMatchMode="contains" sortBy="#{current.patId}">
                             <h:outputText value="#{current.patId}" />
                         </p:column>
 
-                        <p:column headerText="Ville" filterBy="#{current.patNome}" filterMatchMode="contains" sortBy="#{current.patNome}">
-                            <h:outputText value="#{current.patNome}" />
+                        <p:column headerText="Nom" filterBy="#{current.patNom}" filterMatchMode="contains" sortBy="#{current.patNom}">
+                            <h:outputText value="#{current.patNom}" />
                         </p:column>
 
-                        <p:column headerText="Order" filterBy="#{current.patAddress}" filterMatchMode="contains"
-                                  sortBy="#{current.patAddress}">
+                        <p:column headerText="Prénom" filterBy="#{current.patPrenom}" filterMatchMode="contains" sortBy="#{current.patPrenom}">
+                            <h:outputText value="#{current.patPrenom}" />
+                        </p:column>
+                        
+                        <p:column headerText="Adresse" filterBy="#{current.patAdresse}" filterMatchMode="contains"
+                                  sortBy="#{current.patAdresse}">
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{current.patAddress}" />
+                                    <h:outputText value="#{current.patAdresse}" />
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{current.patAddress}"/>
+                                    <p:inputText value="#{current.patAdresse}"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

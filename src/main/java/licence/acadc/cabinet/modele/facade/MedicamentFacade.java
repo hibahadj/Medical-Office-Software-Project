@@ -1,12 +1,13 @@
+
 package licence.acadc.cabinet.modele.facade;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import licence.acadc.cabinet.modele.entity.Patient;
+import licence.acadc.cabinet.modele.entity.Medicament;
 
 @Stateless
-public class PatientFacade extends AbstractFacade<Patient> {
+public class MedicamentFacade extends AbstractFacade<Medicament> {
 
     @PersistenceContext(unitName = "Cab-ejb")
     private EntityManager em;
@@ -16,8 +17,7 @@ public class PatientFacade extends AbstractFacade<Patient> {
         return em;
     }
 
-    public PatientFacade() {
-        super(Patient.class);
+    public MedicamentFacade () {
+        super(Medicament.class);
     }
-    
 }

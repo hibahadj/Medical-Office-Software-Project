@@ -11,78 +11,87 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author HADJIEDJ
+ * @author ADMIN
  */
 @Entity
 @Table(name = "dossier")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Dossier.findAll", query = "SELECT d FROM Dossier d")})
+    @NamedQuery(name = "Dossier.findAll", query = "SELECT d FROM Dossier d"),
+    @NamedQuery(name = "Dossier.findByDossId", query = "SELECT d FROM Dossier d WHERE d.dossId = :dossId"),
+    @NamedQuery(name = "Dossier.findByDossNom", query = "SELECT d FROM Dossier d WHERE d.dossNom = :dossNom"),
+    @NamedQuery(name = "Dossier.findByDossComm", query = "SELECT d FROM Dossier d WHERE d.dossComm = :dossComm")})
 public class Dossier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "DSS_ID")
-    private Integer dssId;
-    @Size(max = 255)
-    @Column(name = "DSS_CMNT")
-    private String dssCmnt;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "DSS_PAT_ID")
-    private int dssPatId;
+    @Column(name = "DOSS_ID")
+    private Integer dossId;
+    @Size(max = 100)
+    @Column(name = "DOSS_NOM")
+    private String dossNom;
+    @Size(max = 1000)
+    @Column(name = "DOSS_COMM")
+    private String dossComm;
+    @JoinColumn(name = "FK_DOSS_PAT", referencedColumnName = "PAT_ID")
+    @ManyToOne(optional = false)
+    private Patient fkDossPat;
 
     public Dossier() {
     }
 
-    public Dossier(Integer dssId) {
-        this.dssId = dssId;
+    public Dossier(Integer dossId) {
+        this.dossId = dossId;
     }
 
-    public Dossier(Integer dssId, int dssPatId) {
-        this.dssId = dssId;
-        this.dssPatId = dssPatId;
+    public Integer getDossId() {
+        return dossId;
     }
 
-    public Integer getDssId() {
-        return dssId;
+    public void setDossId(Integer dossId) {
+        this.dossId = dossId;
     }
 
-    public void setDssId(Integer dssId) {
-        this.dssId = dssId;
+    public String getDossNom() {
+        return dossNom;
     }
 
-    public String getDssCmnt() {
-        return dssCmnt;
+    public void setDossNom(String dossNom) {
+        this.dossNom = dossNom;
     }
 
-    public void setDssCmnt(String dssCmnt) {
-        this.dssCmnt = dssCmnt;
+    public String getDossComm() {
+        return dossComm;
     }
 
-    public int getDssPatId() {
-        return dssPatId;
+    public void setDossComm(String dossComm) {
+        this.dossComm = dossComm;
     }
 
-    public void setDssPatId(int dssPatId) {
-        this.dssPatId = dssPatId;
+    public Patient getFkDossPat() {
+        return fkDossPat;
+    }
+
+    public void setFkDossPat(Patient fkDossPat) {
+        this.fkDossPat = fkDossPat;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (dssId != null ? dssId.hashCode() : 0);
+        hash += (dossId != null ? dossId.hashCode() : 0);
         return hash;
     }
 
@@ -93,7 +102,7 @@ public class Dossier implements Serializable {
             return false;
         }
         Dossier other = (Dossier) object;
-        if ((this.dssId == null && other.dssId != null) || (this.dssId != null && !this.dssId.equals(other.dssId))) {
+        if ((this.dossId == null && other.dossId != null) || (this.dossId != null && !this.dossId.equals(other.dossId))) {
             return false;
         }
         return true;
@@ -101,7 +110,7 @@ public class Dossier implements Serializable {
 
     @Override
     public String toString() {
-        return "licence.acadc.cabinet.modele.entity.Dossier[ dssId=" + dssId + " ]";
+        return "licence.acadc.cabinet.modele.entity.Dossier[ dossId=" + dossId + " ]";
     }
     
 }

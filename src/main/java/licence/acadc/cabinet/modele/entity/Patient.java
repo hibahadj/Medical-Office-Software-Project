@@ -6,30 +6,44 @@ package licence.acadc.cabinet.modele.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author HADJIEDJ
+ * @author ADMIN
  */
 @Entity
 @Table(name = "patient")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p")})
+    @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p"),
+    @NamedQuery(name = "Patient.findByPatId", query = "SELECT p FROM Patient p WHERE p.patId = :patId"),
+    @NamedQuery(name = "Patient.findByPatNom", query = "SELECT p FROM Patient p WHERE p.patNom = :patNom"),
+    @NamedQuery(name = "Patient.findByPatPrenom", query = "SELECT p FROM Patient p WHERE p.patPrenom = :patPrenom"),
+    @NamedQuery(name = "Patient.findByPatDdn", query = "SELECT p FROM Patient p WHERE p.patDdn = :patDdn"),
+    @NamedQuery(name = "Patient.findByPatAdresse", query = "SELECT p FROM Patient p WHERE p.patAdresse = :patAdresse"),
+    @NamedQuery(name = "Patient.findByPatGenre", query = "SELECT p FROM Patient p WHERE p.patGenre = :patGenre"),
+    @NamedQuery(name = "Patient.findByPatSang", query = "SELECT p FROM Patient p WHERE p.patSang = :patSang"),
+    @NamedQuery(name = "Patient.findByPatCreeDate", query = "SELECT p FROM Patient p WHERE p.patCreeDate = :patCreeDate")})
 public class Patient implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,8 +55,8 @@ public class Patient implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "PAT_NOME")
-    private String patNome;
+    @Column(name = "PAT_NOM")
+    private String patNom;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -54,20 +68,28 @@ public class Patient implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date patDdn;
     @Size(max = 45)
-    @Column(name = "PAT_ADDRESS")
-    private String patAddress;
+    @Column(name = "PAT_ADRESSE")
+    private String patAdresse;
     @Size(max = 45)
     @Column(name = "PAT_GENRE")
     private String patGenre;
     @Size(max = 100)
     @Column(name = "PAT_SANG")
     private String patSang;
-    @Size(max = 30)
-    @Column(name = "PAT_CREE_PAR")
-    private String patCreePar;
     @Column(name = "PAT_CREE_DATE")
     @Temporal(TemporalType.DATE)
     private Date patCreeDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkFichPat")
+    private List<Fichier> fichierList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkOrdPat")
+    private List<Ordonnance> ordonnanceList;
+    @JoinColumn(name = "FK_USER_PAT", referencedColumnName = "USER_ID")
+    @ManyToOne(optional = false)
+    private CabUser fkUserPat;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkDossPat")
+    private List<Dossier> dossierList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRdvPat")
+    private List<RendezVous> rendezVousList;
 
     public Patient() {
     }
@@ -76,9 +98,9 @@ public class Patient implements Serializable {
         this.patId = patId;
     }
 
-    public Patient(Integer patId, String patNome, String patPrenom, Date patDdn) {
+    public Patient(Integer patId, String patNom, String patPrenom, Date patDdn) {
         this.patId = patId;
-        this.patNome = patNome;
+        this.patNom = patNom;
         this.patPrenom = patPrenom;
         this.patDdn = patDdn;
     }
@@ -91,12 +113,12 @@ public class Patient implements Serializable {
         this.patId = patId;
     }
 
-    public String getPatNome() {
-        return patNome;
+    public String getPatNom() {
+        return patNom;
     }
 
-    public void setPatNome(String patNome) {
-        this.patNome = patNome;
+    public void setPatNom(String patNom) {
+        this.patNom = patNom;
     }
 
     public String getPatPrenom() {
@@ -115,12 +137,12 @@ public class Patient implements Serializable {
         this.patDdn = patDdn;
     }
 
-    public String getPatAddress() {
-        return patAddress;
+    public String getPatAdresse() {
+        return patAdresse;
     }
 
-    public void setPatAddress(String patAddress) {
-        this.patAddress = patAddress;
+    public void setPatAdresse(String patAdresse) {
+        this.patAdresse = patAdresse;
     }
 
     public String getPatGenre() {
@@ -139,20 +161,56 @@ public class Patient implements Serializable {
         this.patSang = patSang;
     }
 
-    public String getPatCreePar() {
-        return patCreePar;
-    }
-
-    public void setPatCreePar(String patCreePar) {
-        this.patCreePar = patCreePar;
-    }
-
     public Date getPatCreeDate() {
         return patCreeDate;
     }
 
     public void setPatCreeDate(Date patCreeDate) {
         this.patCreeDate = patCreeDate;
+    }
+
+    @XmlTransient
+    public List<Fichier> getFichierList() {
+        return fichierList;
+    }
+
+    public void setFichierList(List<Fichier> fichierList) {
+        this.fichierList = fichierList;
+    }
+
+    @XmlTransient
+    public List<Ordonnance> getOrdonnanceList() {
+        return ordonnanceList;
+    }
+
+    public void setOrdonnanceList(List<Ordonnance> ordonnanceList) {
+        this.ordonnanceList = ordonnanceList;
+    }
+
+    public CabUser getFkUserPat() {
+        return fkUserPat;
+    }
+
+    public void setFkUserPat(CabUser fkUserPat) {
+        this.fkUserPat = fkUserPat;
+    }
+
+    @XmlTransient
+    public List<Dossier> getDossierList() {
+        return dossierList;
+    }
+
+    public void setDossierList(List<Dossier> dossierList) {
+        this.dossierList = dossierList;
+    }
+
+    @XmlTransient
+    public List<RendezVous> getRendezVousList() {
+        return rendezVousList;
+    }
+
+    public void setRendezVousList(List<RendezVous> rendezVousList) {
+        this.rendezVousList = rendezVousList;
     }
 
     @Override

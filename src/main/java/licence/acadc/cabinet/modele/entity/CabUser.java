@@ -35,7 +35,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CabUser.findByUsername", query = "SELECT c FROM CabUser c WHERE c.username = :username"),
     @NamedQuery(name = "CabUser.findByPassword", query = "SELECT c FROM CabUser c WHERE c.password = :password"),
     @NamedQuery(name = "CabUser.findByEmail", query = "SELECT c FROM CabUser c WHERE c.email = :email"),
+<<<<<<< HEAD
     @NamedQuery(name = "CabUser.findByPrivilage", query = "SELECT c FROM CabUser c WHERE c.privilage = :privilage")})
+=======
+    @NamedQuery(name = "CabUser.findByPrivilege", query = "SELECT c FROM CabUser c WHERE c.privilege = :privilege")})
+>>>>>>> fe390307cb8aad8c231ac085da998fb0cbe7855a
 public class CabUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,8 +61,13 @@ public class CabUser implements Serializable {
     @Column(name = "email")
     private String email;
     @Size(max = 30)
+<<<<<<< HEAD
     @Column(name = "privilage")
     private String privilage;
+=======
+    @Column(name = "privilege")
+    private String privilege;
+>>>>>>> fe390307cb8aad8c231ac085da998fb0cbe7855a
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUserPat")
     private List<Patient> patientList;
 
@@ -106,12 +115,21 @@ public class CabUser implements Serializable {
         this.email = email;
     }
 
-    public String getPrivilage() {
-        return privilage;
+    public String getPrivilege() {
+        return privilege;
     }
 
-    public void setPrivilage(String privilage) {
-        this.privilage = privilage;
+    public void setPrivilege(String privilege) {
+        this.privilege = privilege;
+    }
+
+    @XmlTransient
+    public List<Patient> getPatientList() {
+        return patientList;
+    }
+
+    public void setPatientList(List<Patient> patientList) {
+        this.patientList = patientList;
     }
 
     @XmlTransient

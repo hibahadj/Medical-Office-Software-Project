@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package licence.acadc.cabinet.modele.entity;
 
 import java.io.Serializable;
@@ -21,14 +18,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
-<<<<<<< HEAD
- * @author ADMIN
-=======
- * @author HADJIEDJ
->>>>>>> fe390307cb8aad8c231ac085da998fb0cbe7855a
- */
 @Entity
 @Table(name = "medicament")
 @XmlRootElement

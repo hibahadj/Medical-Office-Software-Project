@@ -7,18 +7,11 @@
       xmlns:p="http://primefaces.org/ui">
     <ui:composition template="../templates/templates.xhtml">
         <ui:define name="Title">
-<<<<<<< HEAD
-            Liste de Patients
+            Liste des Médicaments
         </ui:define>
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
-                <div class="panel-heading"><i class="fa fa-table"></i> - Liste de Patients
-=======
-            Liste des Patients
-        </ui:define>
-        <ui:define name="MyContent">
-            <p:panel id="globalPanel" styleClass="globalPanelStyle">
-                <div class="panel-heading"><i class="fa fa-table"></i> - Liste des Patients
+                <div class="panel-heading"><i class="fa fa-table"></i> - Liste des Médicaments
                 </div>       
                 <h:form id="mainForm" prependId="false">
 
@@ -31,38 +24,51 @@
                         </f:facet>
                     </p:toolbar>
 
-                    <p:dataTable value="#{patientController.listAll}" var="current" id="patientTable" widgetVar="patientTable" 
-                                 selection="#{patientController.entity}" rowKey="#{current.patId}" selectionMode="single"
+                    <p:dataTable value="#{MedicamentController.listAll}" var="current" id="MedicamentTable" widgetVar="medicamentTable" 
+                                 selection="#{MedicamentController.entity}" rowKey="#{current.medId}" selectionMode="single"
                                  editable="true" paginator="true" rows="5"
                                  emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
                                  rowsPerPageTemplate="5,10,15,20,50,100"
                                  styleClass="table-condensed" >
-                        <p:ajax event="rowEdit" listener="#{patientController.onRowEditPatient}"  update="@widgetVar(patientTable)"/>
-                        <p:ajax event="rowSelect" listener="#{patientController.onRowSelect}" update=""/>
+                        <p:ajax event="rowEdit" listener="#{MedicamentController.onRowEditMedicament}"  update="@widgetVar(medicamentTable)"/>
+                        <p:ajax event="rowSelect" listener="#{MedicamentController.onRowSelect}" update=""/>
+                        
                         <f:facet name="header">
-                            <i class="fa fa-table" /> <h:outputText value="Liste des Patient" /> 
+                            <i class="fa fa-table" /> <h:outputText value="Liste des Médicaments" /> 
                         </f:facet>     
-                        <p:column headerText="ID Patient" filterBy="#{current.patId}" filterMatchMode="contains" sortBy="#{current.patId}">
-                            <h:outputText value="#{current.patId}" />
+                        
+                        <p:column headerText="ID Médicament" filterBy="#{current.medId}" filterMatchMode="contains" sortBy="#{current.medId}">
+                            <h:outputText value="#{current.medId}" />
                         </p:column>
 
-                        <p:column headerText="Nom" filterBy="#{current.patNom}" filterMatchMode="contains" sortBy="#{current.patNom}">
-                            <h:outputText value="#{current.patNom}" />
+                        <p:column headerText="Nom" filterBy="#{current.medNom}" filterMatchMode="contains" sortBy="#{current.medNom}">
+                            <h:outputText value="#{current.medNom}" />
                         </p:column>
 
-                        <p:column headerText="Prénom" filterBy="#{current.patPrenom}" filterMatchMode="contains" sortBy="#{current.patPrenom}">
-                            <h:outputText value="#{current.patPrenom}" />
+                        <p:column headerText="Forme" filterBy="#{current.medForme}" filterMatchMode="contains" sortBy="#{current.medForme}">
+                            <h:outputText value="#{current.medForme}" />
                         </p:column>
                         
-                        <p:column headerText="Adresse" filterBy="#{current.patAdresse}" filterMatchMode="contains"
-                                  sortBy="#{current.patAdresse}">
+                        <p:column headerText="Type" filterBy="#{current.medType}" filterMatchMode="contains" sortBy="#{current.medType}">
+                            
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{current.patAdresse}" />
+                                    <h:outputText value="#{current.medType}" />
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{current.patAdresse}"/>
+                                    <p:inputText value="#{current.medType}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Prix" filterBy="#{current.medPrix}" filterMatchMode="contains" sortBy="#{current.medPrix}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.medPrix}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{current.medPrix}"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -78,16 +84,18 @@
                             <f:facet name="header">
                                 <i class="fa fa-trash" style="color: #999"/>
                             </f:facet>
-                            <p:commandButton icon="fa fa-trash" action="#{patientController.removePatient}" update="@widgetVar(patientTable)">
-                                <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
-                                <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
+                            <p:commandButton icon="fa fa-trash" action="#{MedicamentController.removeMedicament}" update="@widgetVar(medicamentTable)">
+                                <f:setPropertyActionListener target="#{MedicamentController.entity}" value="#{current}" />
+                                <p:confirm header="Confirmation" message="Confirmez-vous la suppression du médicaments ?"  icon="ui-icon-alert"  />
                             </p:commandButton>
                         </p:column>
+                        
+
+                       
+
                     </p:dataTable>
                 </h:form>
             </p:panel>
         </ui:define>
-
-
     </ui:composition>
 </html>

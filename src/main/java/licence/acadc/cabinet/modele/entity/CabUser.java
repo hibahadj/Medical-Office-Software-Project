@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package licence.acadc.cabinet.modele.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,17 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author ADMIN
- */
+
 @Entity
 @Table(name = "cab_user")
 @XmlRootElement
@@ -35,11 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CabUser.findByUsername", query = "SELECT c FROM CabUser c WHERE c.username = :username"),
     @NamedQuery(name = "CabUser.findByPassword", query = "SELECT c FROM CabUser c WHERE c.password = :password"),
     @NamedQuery(name = "CabUser.findByEmail", query = "SELECT c FROM CabUser c WHERE c.email = :email"),
-<<<<<<< HEAD
     @NamedQuery(name = "CabUser.findByPrivilage", query = "SELECT c FROM CabUser c WHERE c.privilage = :privilage")})
-=======
-    @NamedQuery(name = "CabUser.findByPrivilege", query = "SELECT c FROM CabUser c WHERE c.privilege = :privilege")})
->>>>>>> fe390307cb8aad8c231ac085da998fb0cbe7855a
 public class CabUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,15 +47,8 @@ public class CabUser implements Serializable {
     @Column(name = "email")
     private String email;
     @Size(max = 30)
-<<<<<<< HEAD
     @Column(name = "privilage")
     private String privilage;
-=======
-    @Column(name = "privilege")
-    private String privilege;
->>>>>>> fe390307cb8aad8c231ac085da998fb0cbe7855a
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUserPat")
-    private List<Patient> patientList;
 
     public CabUser() {
     }
@@ -115,30 +94,12 @@ public class CabUser implements Serializable {
         this.email = email;
     }
 
-    public String getPrivilege() {
-        return privilege;
+    public String getPrivilage() {
+        return privilage;
     }
 
-    public void setPrivilege(String privilege) {
-        this.privilege = privilege;
-    }
-
-    @XmlTransient
-    public List<Patient> getPatientList() {
-        return patientList;
-    }
-
-    public void setPatientList(List<Patient> patientList) {
-        this.patientList = patientList;
-    }
-
-    @XmlTransient
-    public List<Patient> getPatientList() {
-        return patientList;
-    }
-
-    public void setPatientList(List<Patient> patientList) {
-        this.patientList = patientList;
+    public void setPrivilage(String privilage) {
+        this.privilage = privilage;
     }
 
     @Override
@@ -163,7 +124,7 @@ public class CabUser implements Serializable {
 
     @Override
     public String toString() {
-        return "licence.acadc.cabinet.modele.entity.CabUser[ userId=" + userId + " ]";
+        return "licence.acadc.cabinet.modele.CabUser[ userId=" + userId + " ]";
     }
     
 }

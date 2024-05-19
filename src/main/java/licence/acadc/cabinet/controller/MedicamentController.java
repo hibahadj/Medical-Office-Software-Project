@@ -11,10 +11,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.event.FileUploadEvent;
+//import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.file.UploadedFile;
+//import org.primefaces.model.file.UploadedFile;
 
 import licence.acadc.cabinet.modele.entity.Medicament;
 import licence.acadc.cabinet.modele.facade.MedicamentFacade;
@@ -58,8 +58,10 @@ public class MedicamentController implements Serializable {
     public void removeMedicament() throws Exception {
         MedicamentFacade.remove(entity);
     }
-
-    public void uploadMedicament(FileUploadEvent event) {
+    
+    /*
+    on aurai pas besoin d'un fichier
+     public void uploadMedicament(FileUploadEvent event) {
         try {
             UploadedFile uploadedFile = (UploadedFile) event.getFile();
             //InputStream inputStr = uploadedFile.getInputstream();
@@ -69,6 +71,18 @@ public class MedicamentController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
         }
     }
+    
+    
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+    
+    */
+   
 
     public Medicament getEntity() {
         return entity;
@@ -86,12 +100,4 @@ public class MedicamentController implements Serializable {
         this.listAll = listAll;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-    
 }

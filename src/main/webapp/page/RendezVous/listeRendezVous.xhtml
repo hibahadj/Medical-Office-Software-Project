@@ -12,10 +12,11 @@
                 Liste des Rendez-vous
         </ui:define>
 
-        <!--  
+         
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
                 <div class="panel-heading"><i class="fa fa-table"></i> - Liste des Rendez-vous </div>
+                </p:panel>
         </ui:define>
         
         
@@ -34,21 +35,10 @@
                             </span>
                         </f:facet>
                         </p:toolbar>
-       -->             
+                   
                     
     <h:form>
-        <ui:include src="side-bar.xhtml"/>
-
-        <div class="container-fluid" style="padding-top:5rem;">
-            <h1 class="h3 mb-2 text-gray-800"><b>Liste des Rendez-vous</b></h1>
-
-            <p:growl id="growl" showDetail="true" sticky="false"/>
-
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Rendez-vous</h6>
-                    <p:commandButton value="Reserver un nouveau rendez-vous" action="#{rendezVousController.prepareCreate}" styleClass="btn btn-primary" icon="pi pi-plus"/>
-                </div>
+        
                 <div class="card-body">
                     <p:dataTable var="rdv" value="#{rendezVousController.items}" paginator="true" rows="10" >
                         <p:column headerText="ID">
@@ -78,28 +68,13 @@
                         </p:column>
                     </p:dataTable>
                 </div>
-            </div>
-        </div>
+            
+        
     </h:form>
     
     <style>
-    .ui-datatable {
-        width: 100%;
-    }
-    @media screen and (max-width: 600px) {
-        .ui-datatable th {
-            font-size: 12px;
-        }
-        .ui-datatable td {
-            font-size: 12px;
-        }
-    }
-</style>
+   
 
-    <script>
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>
-</ui:define>
+    
+</ui:composition>
 </html>

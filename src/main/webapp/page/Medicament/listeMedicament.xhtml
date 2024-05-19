@@ -7,11 +7,16 @@
       xmlns:p="http://primefaces.org/ui">
     <ui:composition template="../templates/templates.xhtml">
         <ui:define name="Title">
-            Liste des Médicaments
+            Liste de médicaments
         </ui:define>
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
-                <div class="panel-heading"><i class="fa fa-table"></i> - Liste des Médicaments
+                <div class="panel-heading"><i class="fa fa-table"></i> - Liste de médicaments </div>
+                </p:panel>
+        </ui:define>
+        <ui:define name="MyContent">
+            <p:panel id="globalPanel" styleClass="globalPanelStyle">
+                <div class="panel-heading"><i class="fa fa-table"></i> - Liste de médicaments
                 </div>       
                 <h:form id="mainForm" prependId="false">
 
@@ -24,22 +29,21 @@
                         </f:facet>
                     </p:toolbar>
 
-                    <p:dataTable value="#{MedicamentController.listAll}" var="current" id="MedicamentTable" widgetVar="medicamentTable" 
+                    <p:dataTable value="#{MedicamentController.listAll}" var="current" id="patientTable" widgetVar="MedicamentTable" 
                                  selection="#{MedicamentController.entity}" rowKey="#{current.medId}" selectionMode="single"
                                  editable="true" paginator="true" rows="5"
                                  emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
                                  rowsPerPageTemplate="5,10,15,20,50,100"
                                  styleClass="table-condensed" >
-                        <p:ajax event="rowEdit" listener="#{MedicamentController.onRowEditMedicament}"  update="@widgetVar(medicamentTable)"/>
-                        <p:ajax event="rowSelect" listener="#{MedicamentController.onRowSelect}" update=""/>
-                        
+
+                        <p:ajax event="rowEdit" listener="#{MedicamentController.onRowEditMedicament}"  update="@widgetVar(patientTable)"/>
+                        <p:ajax event="rowSelect" listener="#{patientController.onRowSelect}" update=""/>
                         <f:facet name="header">
-                            <i class="fa fa-table" /> <h:outputText value="Liste des Médicaments" /> 
+                            <i class="fa fa-table" /> <h:outputText value="Liste de Medicament" /> 
                         </f:facet>     
-                        
-                        <p:column headerText="ID Médicament" filterBy="#{current.medId}" filterMatchMode="contains" sortBy="#{current.medId}">
-                            <h:outputText value="#{current.medId}" />
+                        <p:column headerText="ID Medicament" filterBy="#{current.medId}" filterMatchMode="contains" sortBy="#{current.medId}">
+                            <h:outputText value="#{current.patId}" />
                         </p:column>
 
                         <p:column headerText="Nom" filterBy="#{current.medNom}" filterMatchMode="contains" sortBy="#{current.medNom}">
@@ -49,9 +53,10 @@
                         <p:column headerText="Forme" filterBy="#{current.medForme}" filterMatchMode="contains" sortBy="#{current.medForme}">
                             <h:outputText value="#{current.medForme}" />
                         </p:column>
+
                         
-                        <p:column headerText="Type" filterBy="#{current.medType}" filterMatchMode="contains" sortBy="#{current.medType}">
-                            
+                        <p:column headerText="Type" filterBy="#{current.medType}" filterMatchMode="contains"
+                                  sortBy="#{current.medType}">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{current.medType}" />
@@ -61,8 +66,9 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        
-                        <p:column headerText="Prix" filterBy="#{current.medPrix}" filterMatchMode="contains" sortBy="#{current.medPrix}">
+
+                        <p:column headerText="Prix" filterBy="#{current.medPrix}" filterMatchMode="contains"
+                                  sortBy="#{current.medPrix}">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{current.medPrix}" />
@@ -84,18 +90,16 @@
                             <f:facet name="header">
                                 <i class="fa fa-trash" style="color: #999"/>
                             </f:facet>
-                            <p:commandButton icon="fa fa-trash" action="#{MedicamentController.removeMedicament}" update="@widgetVar(medicamentTable)">
+                            <p:commandButton icon="fa fa-trash" action="#{MedicamentController.removeMedicament}" update="@widgetVar(MedicamentTable)">
                                 <f:setPropertyActionListener target="#{MedicamentController.entity}" value="#{current}" />
-                                <p:confirm header="Confirmation" message="Confirmez-vous la suppression du médicaments ?"  icon="ui-icon-alert"  />
+                                <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
                             </p:commandButton>
                         </p:column>
-                        
-
-                       
-
                     </p:dataTable>
                 </h:form>
             </p:panel>
         </ui:define>
+
+
     </ui:composition>
 </html>

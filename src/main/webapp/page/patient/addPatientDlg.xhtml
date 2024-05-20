@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog widgetVar="patientDlg" modal="true" width="50%" closable="true"  id="patientDlg">
+        <f:facet name="header">
+            <i class="fa fa-plus" style="color: #999"> - </i> Créer une nouveau Patient  :
+        </f:facet>
+        <p:panel  widgetVar="patientDlgCreation" styleClass="ui-fluid" style="border-radius: 0">
+            <p:panelGrid id="panelPatient" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                <p:outputLabel styleClass="label-style" value="Nom de Patient:" for="nom" />
+                <p:inputText id="nom" required="true" value="#{patientController.entity.patNom}" onblur="value = value.toUpperCase()" />
+
+                <p:outputLabel styleClass="label-style" value="Prénom de Patient:" for="prenom" />
+                <p:inputText id="prenom" required="true" value="#{patientController.entity.patPrenom}" onblur="value = value.toUpperCase()"/>
+
+                <p:outputLabel styleClass="label-style" value="Date de Naiss:" for="dateDdn" />
+                <p:calendar value="#{patientController.entity.patDdn}" maxdate="#{patientController.sysDate}" mask="99/99/9999"
+                            required="true" id="dateDdn" pattern="dd/MM/yyyy" />
+
+                <p:outputLabel styleClass="label-style" value="Adresse:" for="adresse" />
+                <p:inputText id="adresse" value="#{patientController.entity.patAdresse}" required="true"/>
+
+                <p:outputLabel  styleClass="label-style" value="Genre" for="genre" />
+                <p:selectOneMenu value="#{patientController.entity.patGenre}"  id="genre" filter="true" filterMatchMode="contains" required="true">
+                    <f:selectItem itemLabel="Homme" itemValue="Homme"/>
+                    <f:selectItem itemLabel="Femme" itemValue="Femme"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel  styleClass="label-style" value="Sang" for="sang"/>
+                <p:selectOneMenu value="#{patientController.entity.patSang}"  id="sang" filter="true" filterMatchMode="contains" required="true">
+                    <f:selectItem itemLabel="O+" itemValue="O+"/>
+                    <f:selectItem itemLabel="O-" itemValue="O-"/>
+                    <f:selectItem itemLabel="A+" itemValue="A+"/>
+                    <f:selectItem itemLabel="A-" itemValue="A-"/>
+                    <f:selectItem itemLabel="B+" itemValue="B+"/>
+                    <f:selectItem itemLabel="B-" itemValue="B-"/>
+                    <f:selectItem itemLabel="AB+" itemValue="AB+"/>
+                    <f:selectItem itemLabel="AB-" itemValue="AB-"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel styleClass="label-style" value="Téléphone:" for="telephone"/>
+                <p:inputText id="telephone" value="#{patientController.entity.patTel}" required="true"/>
+
+            </p:panelGrid>
+        </p:panel>
+        <f:facet name="footer">
+            <p:commandButton value="Valider"
+                             validateClient="true"
+                             process="panelPatient @this"
+                             icon="fa fa-check" update="@(.globalPanelStyle)" styleClass="ui-add-btn"
+                             widgetVar="validePatientBtn"  action="#{patientController.createPatient()}"/>
+            <p:commandButton value="Annuler" icon="fa fa-close"
+                             widgetVar="annulerPatientBtn" process="@this" onclick ="PF('patientDlg').hide();"/>
+        </f:facet>
+    </p:dialog>
+
+</ui:composition>
+
+

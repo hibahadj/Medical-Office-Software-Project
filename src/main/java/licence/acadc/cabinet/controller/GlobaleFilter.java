@@ -14,11 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName = "NavigationFilter", urlPatterns = {"/page/*"}, dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.ERROR, DispatcherType.REQUEST})
+@WebFilter(filterName = "GlobaleFilter", urlPatterns = {"/page/*"}, dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.ERROR, DispatcherType.REQUEST})
 public class GlobaleFilter implements Filter {
 
     private static final String LOGIN_PAGE = "/login.xhtml";
-    //private static final String ERROR_PAGE = "/pages/erreur/erreur403.xhtml";
 
     private FilterConfig filterConfig = null;
 
@@ -32,10 +31,8 @@ public class GlobaleFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = (HttpSession) httpRequest.getSession(false);
         String uri = httpRequest.getRequestURI();
-        System.out.println("yakoubkkkkkkkkk");
         if (loginUser == null) {
             httpResponse.sendRedirect(httpRequest.getContextPath() + LOGIN_PAGE);
-            System.out.println("yakoub");
         }
         if (session == null) {
             if (!response.isCommitted()) {
@@ -43,7 +40,6 @@ public class GlobaleFilter implements Filter {
             }
 
         } else {
-            System.out.println("yakoubbbb");
             chain.doFilter(request, response);
         } 
     }
@@ -69,9 +65,9 @@ public class GlobaleFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("NavigationFilter()");
+            return ("GlobaleFilter()");
         }
-        StringBuilder sb = new StringBuilder("NavigationFilter(");
+        StringBuilder sb = new StringBuilder("GlobaleFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

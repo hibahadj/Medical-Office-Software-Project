@@ -70,6 +70,9 @@ public class Patient implements Serializable {
     @Size(max = 45)
     @Column(name = "PAT_ADRESSE")
     private String patAdresse;
+    @Size(max = 30)
+    @Column(name = "PAT_TEL")
+    private String patTel;
     @Size(max = 45)
     @Column(name = "PAT_GENRE")
     private String patGenre;
@@ -143,6 +146,14 @@ public class Patient implements Serializable {
 
     public void setPatAdresse(String patAdresse) {
         this.patAdresse = patAdresse;
+    }
+
+    public String getPatTel() {
+        return patTel;
+    }
+
+    public void setPatTel(String patTel) {
+        this.patTel = patTel;
     }
 
     public String getPatGenre() {
@@ -237,5 +248,5 @@ public class Patient implements Serializable {
     public String toString() {
         return "licence.acadc.cabinet.modele.entity.Patient[ patId=" + patId + " ]";
     }
-    
+
 }

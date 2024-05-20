@@ -19,8 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,14 +26,13 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "cab_user")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CabUser.findAll", query = "SELECT c FROM CabUser c"),
     @NamedQuery(name = "CabUser.findByUserId", query = "SELECT c FROM CabUser c WHERE c.userId = :userId"),
     @NamedQuery(name = "CabUser.findByUsername", query = "SELECT c FROM CabUser c WHERE c.username = :username"),
     @NamedQuery(name = "CabUser.findByPassword", query = "SELECT c FROM CabUser c WHERE c.password = :password"),
     @NamedQuery(name = "CabUser.findByEmail", query = "SELECT c FROM CabUser c WHERE c.email = :email"),
-    @NamedQuery(name = "CabUser.findByPrivilege", query = "SELECT c FROM CabUser c WHERE c.privilege = :privilege")})
+    @NamedQuery(name = "CabUser.findByPrivilage", query = "SELECT c FROM CabUser c WHERE c.privilage = :privilage")})
 public class CabUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,8 +54,8 @@ public class CabUser implements Serializable {
     @Column(name = "email")
     private String email;
     @Size(max = 30)
-    @Column(name = "privilege")
-    private String privilege;
+    @Column(name = "privilage")
+    private String privilage;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUserPat")
     private List<Patient> patientList;
 
@@ -106,15 +103,14 @@ public class CabUser implements Serializable {
         this.email = email;
     }
 
-    public String getPrivilege() {
-        return privilege;
+    public String getPrivilage() {
+        return privilage;
     }
 
-    public void setPrivilege(String privilege) {
-        this.privilege = privilege;
+    public void setPrivilage(String privilage) {
+        this.privilage = privilage;
     }
 
-    @XmlTransient
     public List<Patient> getPatientList() {
         return patientList;
     }

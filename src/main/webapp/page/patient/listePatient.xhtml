@@ -17,7 +17,8 @@
 
                     <p:toolbar style="border-bottom: none;">
                         <f:facet name="left">
-                            <p:commandButton value="Import" icon="ui-icon-plus" onclick="PF('logoDlg').show();"  process="@this"/>
+                            <p:commandButton value="Nouveau" icon="fa fa-plus" oncomplete="PF('patientDlg').show();"
+                                             update="@widgetVar(patientDlg)" styleClass="ui-add-btn"  action="#{patientController.onInitPatient()}"/>
                             <span class="ui-separator">
                                 <span class="ui-icon ui-icon-grip-dotted-vertical" />
                             </span>
@@ -34,7 +35,7 @@
                         <p:ajax event="rowEdit" listener="#{patientController.onRowEditPatient}"  update="@widgetVar(patientTable)"/>
                         <p:ajax event="rowSelect" listener="#{patientController.onRowSelect}" update=""/>
                         <f:facet name="header">
-                            <i class="fa fa-table" /> <h:outputText value="Liste des Patient" /> 
+                            <i class="fa fa-table" /> <h:outputText value=" Liste des Patients" /> 
                         </f:facet>     
                         <p:column headerText="ID Patient" filterBy="#{current.patId}" filterMatchMode="contains" sortBy="#{current.patId}">
                             <h:outputText value="#{current.patId}" />
@@ -47,7 +48,7 @@
                         <p:column headerText="Prénom" filterBy="#{current.patPrenom}" filterMatchMode="contains" sortBy="#{current.patPrenom}">
                             <h:outputText value="#{current.patPrenom}" />
                         </p:column>
-                        
+
                         <p:column headerText="Adresse" filterBy="#{current.patAdresse}" filterMatchMode="contains"
                                   sortBy="#{current.patAdresse}">
                             <p:cellEditor>
@@ -79,6 +80,11 @@
                     </p:dataTable>
                 </h:form>
             </p:panel>
+
+            <h:form  prependId="false">
+                <ui:include src="addPatientDlg.xhtml"/>
+            </h:form>
+
         </ui:define>
 
 

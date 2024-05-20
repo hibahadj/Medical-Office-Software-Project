@@ -4,19 +4,17 @@
  */
 package licence.acadc.cabinet.modele.facade;
 
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import licence.acadc.cabinet.modele.entity.CabUser;
+import licence.acadc.cabinet.modele.entity.Medicament;
 
 /**
  *
  * @author HADJIEDJ
  */
 @Stateless
-public class CabUserFacade extends AbstractFacade<CabUser> {
+public class MedicamentFacade extends AbstractFacade<Medicament> {
 
     @PersistenceContext(unitName = "Cab-ejb")
     private EntityManager em;
@@ -26,14 +24,8 @@ public class CabUserFacade extends AbstractFacade<CabUser> {
         return em;
     }
 
-    public CabUserFacade() {
-        super(CabUser.class);
+    public MedicamentFacade() {
+        super(Medicament.class);
     }
-
-    public CabUser findByUsername(String userName) {
-        Query q = em.createNamedQuery("CabUser.findByUsername");
-        q.setParameter("username", userName);
-        List<CabUser> list = q.getResultList();
-        return list.isEmpty() ? null : list.get(0);
-    }
+    
 }

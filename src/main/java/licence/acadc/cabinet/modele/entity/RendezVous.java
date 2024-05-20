@@ -126,6 +126,10 @@ public class RendezVous implements Serializable {
     public Patient getFkRdvPat() {
         return fkRdvPat;
     }
+    
+    public String getRdvPatient() {
+        return fkRdvPat.getPatNom()+" "+fkRdvPat.getPatPrenom();
+    }
 
     public void setFkRdvPat(Patient fkRdvPat) {
         this.fkRdvPat = fkRdvPat;

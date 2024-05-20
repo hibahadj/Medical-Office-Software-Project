@@ -29,7 +29,7 @@
                         </f:facet>
                     </p:toolbar>
 
-                    <p:dataTable value="#{MedicamentController.listAll}" var="current" id="patientTable" widgetVar="MedicamentTable" 
+                    <p:dataTable value="#{MedicamentController.listAll}" var="current" id="MedicamentTable" widgetVar="MedicamentTable" 
                                  selection="#{MedicamentController.entity}" rowKey="#{current.medId}" selectionMode="single"
                                  editable="true" paginator="true" rows="5"
                                  emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
@@ -37,8 +37,8 @@
                                  rowsPerPageTemplate="5,10,15,20,50,100"
                                  styleClass="table-condensed" >
 
-                        <p:ajax event="rowEdit" listener="#{MedicamentController.onRowEditMedicament}"  update="@widgetVar(patientTable)"/>
-                        <p:ajax event="rowSelect" listener="#{patientController.onRowSelect}" update=""/>
+                        <p:ajax event="rowEdit" listener="#{MedicamentController.onRowEditMedicament}"  update="@widgetVar(Medicamenttable)"/>
+                        <p:ajax event="rowSelect" listener="#{MedicamentController.onRowSelect}" update=""/>
                         <f:facet name="header">
                             <i class="fa fa-table" /> <h:outputText value="Liste de Medicament" /> 
                         </f:facet>     

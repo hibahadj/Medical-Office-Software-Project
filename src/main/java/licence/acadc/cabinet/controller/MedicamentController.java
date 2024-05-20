@@ -15,6 +15,7 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.file.UploadedFile;
 
+
 import licence.acadc.cabinet.modele.entity.Medicament;
 import licence.acadc.cabinet.modele.facade.MedicamentFacade;
 

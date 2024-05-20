@@ -35,7 +35,7 @@ public class RendezVousController implements Serializable {
     public void init() {
         treatmentOptions = new ArrayList<>();
         treatmentOptions.add("Enfant");
-        treatmentOptions.add("Test");
+        treatmentOptions.add("Agée");
         treatmentOptions.add("Adulte");
         treatmentOptions.add("Enciente");
     }

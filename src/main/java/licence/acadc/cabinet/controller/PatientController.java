@@ -21,6 +21,9 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.file.UploadedFile;
 
+import licence.acadc.cabinet.modele.entity.Patient;
+import licence.acadc.cabinet.modele.facade.PatientFacade;
+
 @Named
 @ViewScoped
 public class PatientController implements Serializable {
@@ -63,6 +66,8 @@ public class PatientController implements Serializable {
     }
 
     public void onRowEditPatient(RowEditEvent event) {
+        patientFacade.edit(entity);
+        
     }
 
     public void removePatient() throws Exception {

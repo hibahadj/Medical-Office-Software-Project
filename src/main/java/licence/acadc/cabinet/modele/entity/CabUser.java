@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package licence.acadc.cabinet.modele.entity;
 
 import java.io.Serializable;
@@ -20,10 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author HADJIEDJ
- */
+
 @Entity
 @Table(name = "cab_user")
 @NamedQueries({
@@ -141,7 +135,7 @@ public class CabUser implements Serializable {
 
     @Override
     public String toString() {
-        return "licence.acadc.cabinet.modele.entity.CabUser[ userId=" + userId + " ]";
+        return "licence.acadc.cabinet.modele.CabUser[ userId=" + userId + " ]";
     }
     
 }

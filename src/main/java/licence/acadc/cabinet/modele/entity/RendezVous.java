@@ -24,7 +24,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
+<<<<<<< HEAD
+ * @author ADMIN
+=======
  * @author HADJIEDJ
+>>>>>>> fe390307cb8aad8c231ac085da998fb0cbe7855a
  */
 @Entity
 @Table(name = "rendez_vous")
@@ -121,6 +125,10 @@ public class RendezVous implements Serializable {
 
     public Patient getFkRdvPat() {
         return fkRdvPat;
+    }
+    
+    public String getRdvPatient() {
+        return fkRdvPat.getPatNom()+" "+fkRdvPat.getPatPrenom();
     }
 
     public void setFkRdvPat(Patient fkRdvPat) {

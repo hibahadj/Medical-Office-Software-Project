@@ -21,7 +21,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
+<<<<<<< HEAD
+ * @author ADMIN
+=======
  * @author HADJIEDJ
+>>>>>>> fe390307cb8aad8c231ac085da998fb0cbe7855a
  */
 @Entity
 @Table(name = "lien_med_ord")

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package licence.acadc.cabinet.modele.facade;
 
 import java.util.List;
@@ -11,10 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import licence.acadc.cabinet.modele.entity.CabUser;
 
-/**
- *
- * @author HADJIEDJ
- */
 @Stateless
 public class CabUserFacade extends AbstractFacade<CabUser> {
 

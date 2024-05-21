@@ -4,6 +4,7 @@ package licence.acadc.cabinet.modele.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "cab_user")
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "CabUser.findAll", query = "SELECT c FROM CabUser c"),
     @NamedQuery(name = "CabUser.findByUserId", query = "SELECT c FROM CabUser c WHERE c.userId = :userId"),

@@ -47,21 +47,21 @@
                                             <span>Liste Patient</span>
                                         </p:link>
                                     </li>
-                                    <li>
-                                        <p:link href="\page\Ordonance\Ordonance.xhtml" >
+                                    <li class="#{view.viewId == '/page/ordonance/ordonance.xhtml'  ? 'active-menu' : ''}">
+                                        <p:link href="/page/ordonance/ordonance.xhtml" >
                                             <i class="fa fa-file" style="color:#0F3284 !important"/> 
                                             <span>Ordonance</span>
                                         </p:link>
                                     </li>
-                                    <li>
-                                        <p:link href="\page\RendezVous\listeRendezVous.xhtml" >
-                                            <i class="fa fa-calendar-o" style="color:#0F3284 !important" />
+                                    <li class="#{view.viewId == '/page/rendezVous/listeRendezVous.xhtml'  ? 'active-menu' : ''}">
+                                        <p:link href="/page/rendezVous/listeRendezVous.xhtml" >
+                                            <i class="fa fa-calendar" style="color:#0F3284 !important" />
                                             <span>Liste Rendez-Vous</span>
                                         </p:link>
                                     </li>
-                                    <li >
-                                        <p:link href="\page\Medicament\listeMedicament.xhtml">
-                                            <i class="fa fa-folder-o" style="color:#0F3284 !important" />
+                                    <li class="#{view.viewId == '/page/medicament/listeMedicament.xhtml'  ? 'active-menu' : ''}">
+                                        <p:link href="/page/medicament/listeMedicament.xhtml">
+                                            <i class="fa fa-folder" style="color:#0F3284 !important" />
                                             <span>Liste Médicament</span>
                                         </p:link>
                                     </li>

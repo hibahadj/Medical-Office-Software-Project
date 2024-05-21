@@ -22,7 +22,9 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.file.UploadedFile;
 
 import licence.acadc.cabinet.modele.entity.Patient;
+import licence.acadc.cabinet.modele.entity.RendezVous;
 import licence.acadc.cabinet.modele.facade.PatientFacade;
+import licence.acadc.cabinet.modele.facade.RendezVousFacade;
 
 @Named
 @ViewScoped
@@ -32,10 +34,13 @@ public class PatientController implements Serializable {
     private PatientFacade patientFacade;
     @Inject
     private CabUserFacade userFacade;
+    @Inject
+    private RendezVousFacade rdvFacade;
 
     private byte[] file;
     private Patient entity;
     private List<Patient> listAll;
+    private RendezVous entityRdv;
     private Date sysDate = new Date();
 
     @PostConstruct
@@ -63,16 +68,44 @@ public class PatientController implements Serializable {
         listAll = patientFacade.findAll();
         entity = new Patient();
         PrimeFaces.current().executeScript("PF('patientDlg').hide()");
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "Le Patient a été Crée avec succès"));
     }
 
     public void onRowEditPatient(RowEditEvent event) {
         patientFacade.edit(entity);
-        
+
     }
 
-    public void removePatient() throws Exception {
+    public void removePatient() {
         patientFacade.remove(entity);
         listAll.remove(entity);
+    }
+
+    public void onInitRdv() {
+        entityRdv = new RendezVous();
+    }
+
+    public void createRdv() {
+        entityRdv.setRdvEtat("En cours");
+        entityRdv.setFkRdvPat(entity);
+        try {
+            rdvFacade.create(entityRdv);
+            entity.getRendezVousList().add(entityRdv);
+            entityRdv = new RendezVous();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "Le rendez-vous a été Crée avec succès"));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+        }
+    }
+
+    public void onRowEditRdv(RowEditEvent event) {
+        RendezVous rdv = (RendezVous) event.getObject();
+        try {
+            rdvFacade.edit(rdv);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "Modification effectué avec succès"));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+        }
     }
 
     public void uploadPatient(FileUploadEvent event) {
@@ -105,6 +138,14 @@ public class PatientController implements Serializable {
 
     public void setListAll(List<Patient> listAll) {
         this.listAll = listAll;
+    }
+
+    public RendezVous getEntityRdv() {
+        return entityRdv;
+    }
+
+    public void setEntityRdv(RendezVous entityRdv) {
+        this.entityRdv = entityRdv;
     }
 
     public byte[] getFile() {

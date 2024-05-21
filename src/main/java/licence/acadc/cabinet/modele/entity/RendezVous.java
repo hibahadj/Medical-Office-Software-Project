@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package licence.acadc.cabinet.modele.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,19 +17,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
-<<<<<<< HEAD
- * @author ADMIN
-=======
- * @author HADJIEDJ
->>>>>>> fe390307cb8aad8c231ac085da998fb0cbe7855a
- */
 @Entity
 @Table(name = "rendez_vous")
-@XmlRootElement
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "RendezVous.findAll", query = "SELECT r FROM RendezVous r"),
     @NamedQuery(name = "RendezVous.findByRdvId", query = "SELECT r FROM RendezVous r WHERE r.rdvId = :rdvId"),

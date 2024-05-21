@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <p:dialog id="addRdvDlg" widgetVar="addRdvDlg" modal="true" resizable="false" width="70%" responsive="true" styleClass="addRdvDlg">
+        <f:facet name="header">
+            <i class="fa fa-pencil" style="color: #999"/> - Nouveau Rendez-vous : #{patientController.entity.patNom} #{patientController.entity.patPrenom}
+        </f:facet>
+        <p:panel id="panelRdv" style="background: #f9f9f9">
+            <p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-8,ui-grid-col-1,ui-grid-col-3" styleClass="ui-panelgrid-blank ui-fluid">
+                <p:outputLabel styleClass="label-style" value="Priorité :" for="priorit"/>
+                <p:selectOneMenu  value="#{patientController.entityRdv.rdvPriorite}" id="priorit" filter="true" filterMatchMode="contains"
+                                  style="width: 200px" required="true">
+                    <f:selectItem itemLabel="Haute" itemValue="Haute"/>
+                    <f:selectItem itemLabel="Moyen" itemValue="Moyen"/>
+                    <f:selectItem itemLabel="Faible" itemValue="Faible"/>
+                </p:selectOneMenu>
+                <p:outputLabel  styleClass="label-style" value="Date de Rendez-vous : " for="dateRdv"/>
+                <p:calendar   pattern="dd/MM/yyyy HH:mm" style="width: 200px"
+                              mindate="#{patientController.sysDate}"
+                              navigator="true" mode="popup" locale="en"
+                              showButtonPanel="true" value="#{patientController.entityRdv.rdvDate}" required="true" id="dateRdv">
+                </p:calendar>
+
+                <p:outputLabel styleClass="label-style" value="Détails :" for="descRdv"/>
+                <p:inputTextarea id="descRdv" rows="1" value="#{patientController.entityRdv.rdvDescr}"  style="width: 600px;" cols="300" counter="display" maxlength="2000" counterTemplate="{0} characters remaining." autoResize="false" />
+                <h:outputText id="display" />
+            </p:panelGrid>
+            <p:toolbar  style="border: none;">
+                <f:facet name="left">
+                    <p:commandButton icon="fa fa-check" value="Reserver" process="panelRdv" action="#{patientController.createRdv()}" update="rdvTable panelRdv"/>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton immediate="true" oncomplete="PF('addRdvDlg').hide();" process="@this" value="Fermer" icon="fa fa-close"/>
+                </f:facet>
+            </p:toolbar>
+
+        </p:panel>
+        <p:panel  style="border-radius: 0">
+            <p:dataTable value="#{patientController.entity.rendezVousList}" var="rdv" id="rdvTable" widgetVar="rdvTable"
+                         rowKey="#{rdv.rdvId}" rowIndexVar="index" disabledSelection="true"
+                         paginator="true" rows="5" editable="true" styleClass="table-condensed"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,25,30" paginatorPosition="bottom"
+                         sortBy="#{rdv.rdvDate}" sortOrder="DESCENDING" >
+                <p:ajax event="rowEdit" listener="#{patientController.onRowEditRdv}" update=""/>
+                <p:column headerText="N°">
+                    <h:outputText value="#{rdv.rdvId}"/>
+                </p:column>
+                <p:column headerText="Priorité">
+                    <p:outputPanel rendered="#{rdv.rdvPriorite eq 'Faible'}"><span class="label label-default" style="font-size: 12px;font-weight: normal">Faible</span></p:outputPanel>
+                    <p:outputPanel rendered="#{rdv.rdvPriorite eq 'Haute'}"><span class="label label-danger" style="font-size: 12px;font-weight: normal">Haute</span></p:outputPanel>
+                    <p:outputPanel rendered="#{rdv.rdvPriorite eq 'Moyen'}"><span class="label label-warning" style="font-size: 12px;font-weight: normal">Moyen</span></p:outputPanel>
+                </p:column>
+                <p:column headerText="Date" >
+                    <h:outputText value="#{rdv.rdvDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy - HH:mm" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Detail" >
+                    <h:outputText value="#{rdv.rdvDescr}"/>
+                </p:column>
+                <p:column headerText="Status" style="text-align: center;">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputPanel rendered="#{rdv.rdvEtat eq 'Termine'}"><span class="label label-success" style="font-size: 12px;font-weight: normal">Termine</span></p:outputPanel>
+                            <p:outputPanel rendered="#{rdv.rdvEtat eq 'Annule'}"><span class="label label-danger" style="font-size: 12px;font-weight: normal">Annule</span></p:outputPanel>
+                            <p:outputPanel rendered="#{rdv.rdvEtat eq 'En cours'}"><span class="label label-warning" style="font-size: 12px;font-weight: normal">En cours</span></p:outputPanel>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:selectOneMenu  value="#{rdv.rdvEtat}" style="width:100%;border-radius: 0">
+                                <f:selectItem itemLabel="En cours" itemValue="En cours"/>
+                                <f:selectItem itemLabel="Termine" itemValue="Termine"/>
+                                <f:selectItem itemLabel="Annule" itemValue="Annule"/>
+                                <p:ajax event="change"/>
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Action" style="text-align: center" exportable="false">
+                    <f:facet name="header">
+                        <i class="fa fa-pencil" style="color: #999" />
+                    </f:facet>
+                    <p:rowEditor rendered="#{rdv.rdvEtat eq 'En cours'}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </p:dialog>
+</ui:composition>

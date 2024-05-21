@@ -4,25 +4,23 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-        
 
     <ui:composition template="../templates/templates.xhtml">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css"/>
-      
+
         <ui:define name="Title">
             Liste de Rendez-Vous
         </ui:define>
-      
+
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
                 <div class="panel-heading"><i class="fa fa-table"></i> - Liste de Rendez-Vous </div>
-                </p:panel>
+            </p:panel>
         </ui:define>
-      
+
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
                 <div class="panel-heading"><i class="fa fa-table"></i> - Liste de Rendez-Vous </div>       
-              /****/  <h:form id="mainForm" prependId="false">
+                <h:form id="mainForm" prependId="false">
                     <p:toolbar style="border-bottom: none;">
                         <f:facet name="left">
                             <p:commandButton value="Import" icon="ui-icon-plus" onclick="PF('logoDlg').show();"  process="@this"/>
@@ -31,32 +29,32 @@
                             </span>
                         </f:facet>
                     </p:toolbar>
-                   
-                    
-    
-                <p:dataTable value="#{RendezVousController.listAll}" var="current" id="RendezVousTable" widgetVar="RendezVousTable" 
+
+
+
+                    <p:dataTable value="#{RendezVousController.listAll}" var="current" id="RendezVousTable" widgetVar="RendezVousTable" 
                                  selection="#{RendezVousController.entity}" rowKey="#{current.rdvId}" selectionMode="single"
                                  editable="true" paginator="true" rows="5"
                                  emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
                                  rowsPerPageTemplate="5,10,15,20,50,100"
                                  styleClass="table-condensed" >   
-                    
-                    <p:ajax event="rowEdit" listener="#{RendezVousController.onRowEditRendezVous}"  update="@widgetVar(RendezVousTable)"/>
-                    <p:ajax event="rowSelect" listener="#{RendezVousController.onRowSelect}" update=""/>
-                    
-                    
-                    <f:facet name="header">
+
+                        <p:ajax event="rowEdit" listener="#{RendezVousController.onRowEditRendezVous}"  update="@widgetVar(RendezVousTable)"/>
+                        <p:ajax event="rowSelect" listener="#{RendezVousController.onRowSelect}" update=""/>
+
+
+                        <f:facet name="header">
                             <i class="fa fa-table" /> <h:outputText value="Liste de Rendez-Vous" /> 
                         </f:facet>     
                         <p:column headerText="ID RDV" filterBy="#{current.rdvId}" filterMatchMode="contains" sortBy="#{current.rdvId}">
                             <h:outputText value="#{current.rdvId}" />
                         </p:column>
-                        
+
                         <p:column headerText="Patient" filterBy="#{RendezVous.getRdvPatient}" filterMatchMode="contains" sortBy="#{RendezVous.getRdvPatient}">
-                <h:outputText value="#{RendezVous.getRdvPatient}" />
+                            <h:outputText value="#{RendezVous.getRdvPatient}" />
                         </p:column>
-                    
+
                         <p:column headerText="date" filterBy="#{current.rdvDate}" filterMatchMode="contains" sortBy="#{current.rdvDate}">
                             <h:outputText value="#{current.rdvDate}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
@@ -69,47 +67,47 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                    
+
                         <p:column headerText="Heure" filterBy="#{current.rdvHeure}" filterMatchMode="contains"
                                   sortBy="#{current.rdvHeure}">
                             <h:outputText value="#{current.rdvHeure}">
                                 <f:convertDateTime pattern="HH:mm" />
                             </h:outputText>
                         </p:column>
-                    
-                      <p:column headerText="Etat" filterBy="#{current.rdvEtat}" filterMatchMode="contains" sortBy="#{current.rdvEtat}">
-                <p:cellEditor>
-                    <f:facet name="output">
-                        <h:outputText value="#{current.rdvEtat}" />
-                    </f:facet>
-                    <f:facet name="input">
-                        <h:selectOneMenu value="#{current.rdvEtat}">
-                            <f:selectItems value="#{rendezVousController.etatOptions}" />
-                        </h:selectOneMenu>
-                    </f:facet>
-                </p:cellEditor>
-                     </p:column>
-                    <!--  
-                        <p:column headerText="Description" filterBy="#{current.rdvDescr}" filterMatchMode="contains" sortBy="#{current.rdvDescr}">
-                            <h:outputText value="#{curent.rdvDescr}" />
-                        </p:column>
-                    
-                        <p:column headerText="Priorité">
-                            <h:outputText value="#{rdv.rdvPriorite}" />
-                        </p:column>
-                    -->
-                       
-                        
-                        
-                    </p:dataTable>
-                </div>
-            
-        
-    </h:form>
-    
-    
-   
 
-    
-</ui:composition>
-</html>
+                        <p:column headerText="Etat" filterBy="#{current.rdvEtat}" filterMatchMode="contains" sortBy="#{current.rdvEtat}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.rdvEtat}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu value="#{current.rdvEtat}">
+                                        <f:selectItems value="#{rendezVousController.etatOptions}" />
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <!--  
+                            <p:column headerText="Description" filterBy="#{current.rdvDescr}" filterMatchMode="contains" sortBy="#{current.rdvDescr}">
+                                <h:outputText value="#{curent.rdvDescr}" />
+                            </p:column>
+                        
+                            <p:column headerText="Priorité">
+                                <h:outputText value="#{rdv.rdvPriorite}" />
+                            </p:column>
+                        -->
+
+
+
+                    </p:dataTable>
+                    </div>
+
+
+                </h:form>
+
+
+
+
+
+                </ui:composition>
+                </html>

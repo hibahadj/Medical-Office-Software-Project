@@ -73,12 +73,15 @@
                             <p:rowEditor/>
                         </p:column>
 
-                        <p:column width="8%" headerText="Actien" style="text-align: center" exportable="false">
+                        <p:column headerText="Actien" style="text-align: center" exportable="false">
                             <p:commandButton id="rdv" icon="fa fa-calendar" process="@this" action="#{patientController.onInitRdv()}" 
                                              oncomplete ="PF('addRdvDlg').show();" update="@widgetVar(addRdvDlg)" style="width:25px" >
                                 <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
                             </p:commandButton>
-
+                            <p:commandButton id="file" update="@widgetVar(addFileDlg)" process="@this" icon="fa fa-chain-broken"  
+                                             action="#{patientController.onInitFile()}" oncomplete="PF('addFileDlg').show();" >
+                                <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
+                            </p:commandButton>     
                             <p:commandButton icon="fa fa-trash" action="#{patientController.removePatient}" update="@widgetVar(patientTable)">
                                 <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
                                 <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
@@ -93,6 +96,9 @@
             </h:form>
             <h:form  prependId="false">
                 <ui:include src="addRdvDlg.xhtml"/>
+            </h:form>
+            <h:form  prependId="false">
+                <ui:include src="addFileDlg.xhtml"/>
             </h:form>
 
         </ui:define>

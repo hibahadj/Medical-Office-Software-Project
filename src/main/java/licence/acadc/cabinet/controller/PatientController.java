@@ -1,20 +1,22 @@
 package licence.acadc.cabinet.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import licence.acadc.cabinet.modele.entity.Patient;
+import licence.acadc.cabinet.modele.entity.Fichier;
 import licence.acadc.cabinet.modele.facade.CabUserFacade;
-import licence.acadc.cabinet.modele.facade.PatientFacade;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
@@ -23,8 +25,13 @@ import org.primefaces.model.file.UploadedFile;
 
 import licence.acadc.cabinet.modele.entity.Patient;
 import licence.acadc.cabinet.modele.entity.RendezVous;
+import licence.acadc.cabinet.modele.facade.FichierFacade;
 import licence.acadc.cabinet.modele.facade.PatientFacade;
 import licence.acadc.cabinet.modele.facade.RendezVousFacade;
+import org.apache.commons.fileupload.util.Streams;
+import org.primefaces.model.file.UploadedFiles;
+import org.primefaces.shaded.commons.io.FilenameUtils;
+import org.primefaces.shaded.commons.io.IOUtils;
 
 @Named
 @ViewScoped
@@ -36,12 +43,15 @@ public class PatientController implements Serializable {
     private CabUserFacade userFacade;
     @Inject
     private RendezVousFacade rdvFacade;
+    @Inject
+    private FichierFacade fileFacade;
 
-    private byte[] file;
+    private Date sysDate = new Date();
+
     private Patient entity;
     private List<Patient> listAll;
     private RendezVous entityRdv;
-    private Date sysDate = new Date();
+    private Fichier entityFile;
 
     @PostConstruct
     public void init() {
@@ -108,15 +118,59 @@ public class PatientController implements Serializable {
         }
     }
 
-    public void uploadPatient(FileUploadEvent event) {
-        try {
-            UploadedFile uploadedFile = (UploadedFile) event.getFile();
-            //InputStream inputStr = uploadedFile.getInputstream();
-            //file = IOUtils.toByteArray(inputStr);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "le fichier " + uploadedFile.getFileName() + " est chargé."));
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+    public void onInitFile() {
+        entityFile = new Fichier();
+    }
+
+    public void uploadFile(FileUploadEvent event) {
+        UploadedFile f = (UploadedFile) event.getFile();
+        if (f != null) {
+            try {
+                System.out.println("uploadMultiple1");
+                InputStream inputStr = f.getInputStream();
+                entityFile = new Fichier();
+                entityFile.setFichName(f.getFileName());
+                entityFile.setFichFile(IOUtils.toByteArray(inputStr));
+                entityFile.setFichDate(new Date());
+                entityFile.setFichType(FilenameUtils.getExtension(f.getFileName()));
+                entityFile.setFkFichPat(entity);
+                try {
+                    fileFacade.create(entityFile);
+                    entity.getFichierList().add(entityFile);
+                    FacesMessage message = new FacesMessage("Successful", f.getFileName() + " is uploaded.");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                } catch (Exception e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+                }
+
+            } catch (IOException e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+            }
         }
+    }
+
+    public void removeFile() {
+        fileFacade.remove(entityFile);
+        entity.getFichierList().remove(entityFile);
+        entityFile = new Fichier();
+    }
+
+    public void downloadFile(Fichier f) throws IOException {
+        InputStream uploadFile;
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec = fc.getExternalContext();
+        uploadFile = new ByteArrayInputStream(f.getFichFile());
+        String fileType = FacesContext.getCurrentInstance().getExternalContext().getMimeType(f.getFichName());
+        if (fileType == null) {
+            fileType = "application/x-www-form-urlencoded";
+        }
+        ec.responseReset();
+        ec.setResponseContentType(fileType);
+        String attachmentName = "attachment; filename=\"" + f.getFichName() + "\"";
+        ec.setResponseHeader("Content-Disposition", attachmentName);
+        OutputStream output = ec.getResponseOutputStream();
+        Streams.copy(uploadFile, output, false);
+        fc.responseComplete();
     }
 
     public static String getUserPrincipalRequest() {
@@ -148,12 +202,12 @@ public class PatientController implements Serializable {
         this.entityRdv = entityRdv;
     }
 
-    public byte[] getFile() {
-        return file;
+    public Fichier getEntityFile() {
+        return entityFile;
     }
 
-    public void setFile(byte[] file) {
-        this.file = file;
+    public void setEntityFile(Fichier entityFile) {
+        this.entityFile = entityFile;
     }
 
     public Date getSysDate() {

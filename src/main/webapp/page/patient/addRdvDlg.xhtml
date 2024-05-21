@@ -40,7 +40,7 @@
         </p:panel>
         <p:panel  style="border-radius: 0">
             <p:dataTable value="#{patientController.entity.rendezVousList}" var="rdv" id="rdvTable" widgetVar="rdvTable"
-                         rowKey="#{rdv.rdvId}" rowIndexVar="index" disabledSelection="true"
+                         rowKey="#{rdv.rdvId}" rowIndexVar="index" disabledSelection="true" emptyMessage="Liste vide !!!"
                          paginator="true" rows="5" editable="true" styleClass="table-condensed"
                          paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15,20,25,30" paginatorPosition="bottom"

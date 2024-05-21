@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog widgetVar="addFileDlg" id="addFileDlg" modal="true" width="70%" closable="true" >
+            <f:facet name="header">
+                <i class="fa fa-send-o" style="color: #999"/> - Ajouter un Fichier Patient : #{patientController.entity.patNom} #{patientController.entity.patPrenom}
+            </f:facet>
+            <p:panel id="panelImgMaitre" style="background: #f9f9f9" >
+                <p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-8,ui-grid-col-1,ui-grid-col-3" styleClass="ui-panelgrid-blank">
+                    <p:outputLabel styleClass="label-style" value="Ajouter file :" for="fileUpload"/>
+                    <p:fileUpload mode="advanced" id="fileUpload" dragDropSupport="false" listener="#{patientController.uploadFile}" value="#{patientController.file}"
+                                  sizeLimit="10000000" allowTypes="/(\.|\/)(jpe?g|png|pdf|PNG|PDF)$/" label="Choisir"  update="@widgetVar(fileTable)" multiple="false" required="true"
+                                  fileLimitMessage="vous pouvez pas joindre plus que 1 documents!!" fileLimit="1" cancelLabel="Annuler" uploadLabel="Charger" invalidFileMessage="erreur!! fichier invalide veuillez choisir un fichier XLSX ou CSV"
+                                  validatorMessage="erreur!! validation" invalidSizeMessage="la taille de document invalide!!" previewWidth="40" />
+                </p:panelGrid>
+                <p:dataTable value="#{patientController.entity.fichierList}" var="file" id="fileTable" widgetVar="fileTable"
+                             rowKey="#{file.fichId}" rowIndexVar="index" disabledSelection="true" emptyMessage="Liste vide !!!"
+                             paginator="true" rows="5" styleClass="table-condensed"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,20,25,30" paginatorPosition="bottom"
+                             sortBy="#{file.fichId}" sortOrder="DESCENDING" >
+                    <f:facet name="header">
+                        Liste Fichiers :
+                    </f:facet>
+                    <p:column headerText="Id" style="text-align: center;">
+                        <h:outputText value="#{file.fichId}" />
+                    </p:column>
+                    <p:column headerText="Nom" style="text-align: center;">
+                        <h:outputText value="#{file.fichName}" />
+                    </p:column>
+                    <p:column headerText="Type" style="text-align: center;">
+                        <h:outputText value="#{file.fichType}" />
+                    </p:column>
+                    <p:column headerText="Date" style="text-align: center;">
+                        <h:outputText value="#{file.fichDate}">
+                            <f:convertDateTime pattern="dd-MM-yyyy - HH:mm" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Télécharger" style="text-align: center;">
+                        <p:commandButton value="Telecharger" icon="ui-icon-arrowthickstop-1-s" process="@this" onclick="this.form.target = '_blank';PrimeFaces.monitorDownload(start, stop);" immediate="true"  > 
+                            <p:fileDownload value="#{patientController.downloadFile(file)}" contentDisposition="inline"/>
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Supprimer" style="text-align: center;">
+                        <p:commandButton icon="fa fa-trash" action="#{patientController.removeFile}" update="@widgetVar(fileTable)">
+                            <f:setPropertyActionListener target="#{patientController.entityFile}" value="#{file}" />
+                            <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
+                        </p:commandButton>              
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+            <f:facet name="footer">
+                <p:commandButton icon="fa fa-close" value="Fermer"  type="button" onclick="PF('addFileDlg').hide();"/>
+            </f:facet>    
+        </p:dialog>
+    </ui:composition>
+</html>

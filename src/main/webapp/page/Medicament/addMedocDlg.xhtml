@@ -56,8 +56,11 @@
             <p:commandButton value="Valider"
                              validateClient="true"
                              process="panelMedicament @this"
-                             icon="fa fa-check" update="@(.globalPanelStyle)" styleClass="ui-add-btn"
-                             widgetVar="valideMedicamentBtn"  action="#{medicamentController.createMedicament()}"/>
+                             icon="fa fa-check" update="@(.globalPanelStyle)" 
+                             styleClass="ui-add-btn"
+                             widgetVar="valideMedicamentBtn"  
+                             action="#{medicamentController.createMedicament()}"
+                            oncomplete="if (!args.validationFailed) { PF('medocDlg').hide(); }"/>
             
             <p:commandButton value="Annuler" icon="fa fa-close"
                              widgetVar="annulerMedicamentBtn" process="@this" onclick ="PF('medocDlg').hide();"/>

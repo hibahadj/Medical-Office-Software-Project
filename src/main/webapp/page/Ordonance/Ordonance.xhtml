@@ -24,8 +24,7 @@
                                  selection="#{ordonanceController.entity}" rowKey="#{current.ordId}" selectionMode="single"
                                  paginator="true" rows="5" emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
-                                 rowsPerPageTemplate="5,10,15,20,50,100" sortBy="#{ord.ordId}" sortOrder="DESCENDING" 
-                                 styleClass="table-condensed" >
+                                 rowsPerPageTemplate="5,10,15,20,50,100" styleClass="table-condensed" >
                         <p:ajax event="rowEdit" listener="#{ordonanceController.onRowEditOrd}"  update="@widgetVar(ordTable)"/>
                         <p:ajax event="rowSelect" listener="#{ordonanceController.onRowSelect}" update=""/>
                         <f:facet name="header">
@@ -50,14 +49,23 @@
                         <p:column headerText="Date Ord" filterBy="#{current.ordCreeDate}" filterMatchMode="contains"
                                   sortBy="#{current.ordCreeDate}">
                             <h:outputText value="#{current.ordCreeDate}">
-                                <f:convertDateTime pattern="dd-MM-yyyy - HH:mm" />
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Detail" filterBy="#{current.ordDc}" filterMatchMode="contains" sortBy="#{current.ordDc}">
                             <h:outputText value="#{current.ordDc}" />
                         </p:column>
+                        <p:column headerText="Télécharger" style="text-align: center;">
+                            <p:commandButton value="Telecharger" icon="ui-icon-arrowthickstop-1-s" process="@this" onclick="this.form.target = '_blank';PrimeFaces.monitorDownload(start, stop);" immediate="true"  > 
+                                
+                            </p:commandButton>
+                        </p:column>
                         <p:column headerText="Actien" style="text-align: center" exportable="false">
-                            <p:commandButton icon="fa fa-trash" action="#{ordonanceController.removeOrd()}" update="@widgetVar(ordTable)">
+                            <p:commandButton id="ord" update="@widgetVar(addMdcDlg)" process="@this" icon="fa fa-file"  
+                                             action="#{ordonanceController.onInitLien()}" oncomplete="PF('addMdcDlg').show();" >
+                                <f:setPropertyActionListener target="#{ordonanceController.entity}" value="#{current}" />
+                            </p:commandButton> 
+                            <p:commandButton icon="fa fa-trash" action="#{ordonanceController.removeOrd()}" process="@this" update="@widgetVar(ordTable)">
                                 <f:setPropertyActionListener target="#{ordonanceController.entity}" value="#{current}" />
                                 <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
                             </p:commandButton>
@@ -65,7 +73,9 @@
                     </p:dataTable>
                 </h:form>
             </p:panel>
-
+            <h:form  prependId="false">
+                <ui:include src="addMedicamentDlg.xhtml"/>
+            </h:form>
         </ui:define>
 
 

@@ -34,10 +34,12 @@ public class LienMedOrd implements Serializable {
     @Basic(optional = false)
     @Column(name = "LIEN_ID")
     private Integer lienId;
+    @Size(max = 100)
     @Column(name = "LIEN_DOSE")
-    private Integer lienDose;
+    private String lienDose;
+    @Size(max = 100)
     @Column(name = "LIEN_DUREE")
-    private Integer lienDuree;
+    private String lienDuree;
     @Size(max = 100)
     @Column(name = "LIEN_ETAT")
     private String lienEtat;
@@ -68,22 +70,22 @@ public class LienMedOrd implements Serializable {
         this.lienId = lienId;
     }
 
-    public Integer getLienDose() {
+    public String getLienDose() {
         return lienDose;
     }
 
-    public void setLienDose(Integer lienDose) {
+    public void setLienDose(String lienDose) {
         this.lienDose = lienDose;
     }
 
-    public Integer getLienDuree() {
+    public String getLienDuree() {
         return lienDuree;
     }
 
-    public void setLienDuree(Integer lienDuree) {
+    public void setLienDuree(String lienDuree) {
         this.lienDuree = lienDuree;
     }
-
+    
     public String getLienEtat() {
         return lienEtat;
     }

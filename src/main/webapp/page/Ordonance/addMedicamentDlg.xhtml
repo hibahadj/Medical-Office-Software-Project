@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <p:dialog id="addMdcDlg" widgetVar="addMdcDlg" modal="true" resizable="false" width="70%" responsive="true" styleClass="addRdvDlg">
+        <f:facet name="header">
+            <i class="fa fa-pencil" style="color: #999"/> - Nouveau Medicament : #{ordonanceController.entity.ordId}
+        </f:facet>
+        <p:panel id="panelMdc" style="background: #f9f9f9">
+            <p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank ui-fluid">
+                <p:outputLabel  styleClass="label-style" value="Médicament :" for="mdcListe" />
+                <p:selectOneMenu value="#{ordonanceController.medId}"  id="mdcListe" filter="true" filterMatchMode="contains" required="true">
+                    <f:selectItems value="#{ordonanceController.listMdc}" var="exe" itemLabel="#{exe.medNom}" itemValue="#{exe.medId}" />
+                    <p:ajax event="itemSelect"/>
+                </p:selectOneMenu>
+                <p:outputLabel styleClass="label-style" value="Dose :" for="dose"/>
+                <p:inputText id="dose" value="#{ordonanceController.entityLien.lienDose}" required="true"/>
+                <p:outputLabel styleClass="label-style" value="Etat :" for="etat"/>
+                <p:inputText id="etat" value="#{ordonanceController.entityLien.lienEtat}" required="true"/>
+                <p:outputLabel styleClass="label-style" value="Duree :" for="duree"/>
+                <p:inputText id="duree" value="#{ordonanceController.entityLien.lienDuree}" required="true"/>
+            </p:panelGrid>
+            <p:toolbar  style="border: none;">
+                <f:facet name="left">
+                    <p:commandButton icon="fa fa-check" value="Ajouter" process="panelMdc" action="#{ordonanceController.createLien()}" update="mdcTable panelMdc"/>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton immediate="true" oncomplete="PF('addMdcDlg').hide();" process="@this" value="Fermer" icon="fa fa-close"/>
+                </f:facet>
+            </p:toolbar>
+        </p:panel>
+        <p:panel>
+            <p:dataTable value="#{ordonanceController.entity.lienMedOrdList}" var="mdc" id="mdcTable" widgetVar="mdcTable"
+                         rowKey="#{mdc.lienId}" rowIndexVar="index" disabledSelection="true" emptyMessage="Liste vide !!!"
+                         paginator="true" rows="5" editable="true" styleClass="table-condensed"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,25,30" paginatorPosition="bottom"
+                         sortBy="#{mdc.lienId}" sortOrder="DESCENDING" >
+                <p:ajax event="rowEdit" listener="#{ordonanceController.onRowEditMdc}" update=""/>
+                <p:column headerText="Nom">
+                    <h:outputText value="#{mdc.fkMedLien.medNom}"/>
+                </p:column>
+                <p:column headerText="Dose" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{mdc.lienDose}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{mdc.lienDose}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Etat" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{mdc.lienEtat}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{mdc.lienEtat}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Duree" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{mdc.lienDuree}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{mdc.lienDuree}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Edit" style="text-align: center" exportable="false">
+                    <f:facet name="header">
+                        <i class="fa fa-pencil" style="color: #999" />
+                    </f:facet>
+                    <p:rowEditor/>
+                </p:column>
+                <p:column headerText="Supprimer" style="text-align: center;">
+                    <p:commandButton icon="fa fa-trash" action="#{ordonanceController.removeLien}" process="@this" update="@widgetVar(mdcTable)">
+                        <f:setPropertyActionListener target="#{ordonanceController.entityLien}" value="#{mdc}" />
+                        <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
+                    </p:commandButton>              
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </p:dialog>
+</ui:composition>

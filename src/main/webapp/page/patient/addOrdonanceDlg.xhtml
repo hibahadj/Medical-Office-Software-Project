@@ -61,7 +61,7 @@
                     </p:commandButton>              
                 </p:column>
                 <p:column headerText="Supprimer" style="text-align: center;">
-                    <p:commandButton icon="fa fa-trash" action="#{patientController.removeOrd}" update="@widgetVar(ordTable)">
+                    <p:commandButton icon="fa fa-trash" action="#{patientController.removeOrd}" process="@this" update="@widgetVar(ordTable)">
                         <f:setPropertyActionListener target="#{patientController.entityOrd}" value="#{ord}" />
                         <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
                     </p:commandButton>              

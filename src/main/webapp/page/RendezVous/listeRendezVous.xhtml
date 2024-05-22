@@ -20,110 +20,114 @@
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
                 <div class="panel-heading"><i class="fa fa-table"></i> - Liste de Rendez-Vous </div>       
-                
-                
-                    
 
 
-                    <p:dataTable value="#{rendezVousController.listAll}" var="current" id="rdvTable" widgetVar="redvTable" 
-                                 selection="#{rendezVousController.entity}" rowKey="#{current.rdvId}" selectionMode="single"
-                                 editable="true" paginator="true" rows="5"
-                                 emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
-                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
-                                 rowsPerPageTemplate="5,10,15,20,50,100"
-                                 styleClass="table-condensed" >   
-
-                        <p:ajax event="rowEdit" listener="#{RendezVousController.onRowEditRendezVous}"  update="@widgetVar(RendezVousTable)"/>
-                        <p:ajax event="rowSelect" listener="#{RendezVousController.onRowSelect}" update=""/>
 
 
-                        <f:facet name="header">
-                            <i class="fa fa-table" /> <h:outputText value="Liste de Rendez-Vous" /> 
-                        </f:facet>  
-                        
-                        <p:column headerText="N°" filterBy="#{current.rdvId}" filterMatchMode="contains" sortBy="#{current.rdvId}">
-                            <h:outputText value="#{current.rdvId}" />
-                        </p:column>
-                        
-                        <p:column headerText="Patient" >
-                            <h:outputText value="#{current.getRdvPatient()}" />
-                        </p:column>
-                        
-                        
-                        <p:column headerText="Priorité" filterBy="#{current.rdvPriorite}" filterMatchMode="contains"
-                                  sortBy="#{current.rdvPriorite}">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{current.rdvPriorite}" />                   
-                                </f:facet>
-                                <f:facet name="input">
-                                     <p:selectOneMenu value="#{rendezVousController.entity.rdvPriorite}"  id="Priorite" filter="true" filterMatchMode="contains" required="true">
-                               <f:selectItem itemLabel="Haute" itemValue="Haute"/>
-                               <f:selectItem itemLabel="Moyen" itemValue="Moyen"/>
-                               <f:selectItem itemLabel="Faible" itemValue="Faible"/>                              
-                                   </p:selectOneMenu>                                  
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
 
-                        
+                <p:dataTable value="#{rendezVousController.listAll}" var="current" id="rdvTable" widgetVar="redvTable" 
+                             selection="#{rendezVousController.entity}" rowKey="#{current.rdvId}" selectionMode="single"
+                             editable="true" paginator="true" rows="5"
+                             emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
+                             rowsPerPageTemplate="5,10,15,20,50,100"
+                             styleClass="table-condensed" >   
 
-                        <p:column headerText="date" filterBy="#{current.rdvDate}" filterMatchMode="contains" sortBy="#{current.rdvDate}">
-                            <h:outputText value="#{current.rdvDate}">
-                                <f:convertDateTime pattern="dd-MM-yyyy - HH:mm" />
-                            </h:outputText>
-                        </p:column>
-                        
-                      
-                        
-                         
-                         
-                        <p:column headerText="Detail" filterBy="#{current.rdvDescr}" filterMatchMode="contains" sortBy="#{current.rdvDescr}">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{current.rdvDescr}" />                   
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{current.rdvDescr}"/>                                   
-                                </f:facet>
-                            </p:cellEditor>                 
-                        </p:column>
-                        
-                            
-                        <p:column headerText="Status" filterBy="#{current.rdvEtat}" filterMatchMode="contains"
-                                  sortBy="#{current.rdvEtat}">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{current.rdvEtat}" />                   
-                                </f:facet>
-                                <f:facet name="input">
-                                     <p:selectOneMenu value="#{rendezVousController.entity.rdvEtat}"  id="etat" filter="true" filterMatchMode="contains" required="true">
-                               <f:selectItem itemLabel="En cours" itemValue="En cours"/>
-                               <f:selectItem itemLabel="Annulé" itemValue="Annulée"/>
-                               <f:selectItem itemLabel="Terminé" itemValue="Terminé"/>                              
-                                   </p:selectOneMenu>                                  
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column headerText="Action" style="text-align: center" exportable="false">
-                           
-                            <p:commandButton icon="fa fa-trash" action="#{rendezVousController.removerdv}" update="@widgetVar(rdvTable)">
-                                <f:setPropertyActionListener target="#{rendezVousController.entity}" value="#{current}" />
-                                <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
-                            </p:commandButton>
-                        </p:column>
-                        
-                    </p:dataTable>
-                
+                    <p:ajax event="rowEdit" listener="#{RendezVousController.onRowEditRendezVous}"  update="@widgetVar(RendezVousTable)"/>
+                    <p:ajax event="rowSelect" listener="#{RendezVousController.onRowSelect}" update=""/>
+
+
+                    <f:facet name="header">
+                        <i class="fa fa-table" /> <h:outputText value="Liste de Rendez-Vous" /> 
+                    </f:facet>  
+
+                    <p:column headerText="N°" filterBy="#{current.rdvId}" filterMatchMode="contains" sortBy="#{current.rdvId}">
+                        <h:outputText value="#{current.rdvId}" />
+                    </p:column>
+
+                    <p:column headerText="Patient" >
+                        <h:outputText value="#{current.getRdvPatient()}" />
+                    </p:column>
+
+
+                    <p:column headerText="Priorité" filterBy="#{current.rdvPriorite}" filterMatchMode="contains"
+                              sortBy="#{current.rdvPriorite}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputPanel rendered="#{current.rdvPriorite eq 'Faible'}"><span class="label label-default" style="font-size: 12px;font-weight: normal">Faible</span></p:outputPanel>
+                                <p:outputPanel rendered="#{current.rdvPriorite eq 'Haute'}"><span class="label label-danger" style="font-size: 12px;font-weight: normal">Haute</span></p:outputPanel>
+                                <p:outputPanel rendered="#{current.rdvPriorite eq 'Moyen'}"><span class="label label-warning" style="font-size: 12px;font-weight: normal">Moyen</span></p:outputPanel>                 
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{current.rdvPriorite}"  id="Priorite" filter="true" filterMatchMode="contains" required="true">
+                                    <f:selectItem itemLabel="Haute" itemValue="Haute"/>
+                                    <f:selectItem itemLabel="Moyen" itemValue="Moyen"/>
+                                    <f:selectItem itemLabel="Faible" itemValue="Faible"/>                              
+                                </p:selectOneMenu>                                  
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+
+
+                    <p:column headerText="date" filterBy="#{current.rdvDate}" filterMatchMode="contains" sortBy="#{current.rdvDate}">
+                        <h:outputText value="#{current.rdvDate}">
+                            <f:convertDateTime pattern="dd-MM-yyyy - HH:mm" />
+                        </h:outputText>
+                    </p:column>
+
+
+
+
+
+                    <p:column headerText="Detail" filterBy="#{current.rdvDescr}" filterMatchMode="contains" sortBy="#{current.rdvDescr}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{current.rdvDescr}" />                   
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{current.rdvDescr}"/>                                   
+                            </f:facet>
+                        </p:cellEditor>                 
+                    </p:column>
+
+
+                    <p:column headerText="Status" filterBy="#{current.rdvEtat}" filterMatchMode="contains"
+                              sortBy="#{current.rdvEtat}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputPanel rendered="#{current.rdvEtat eq 'Termine'}"><span class="label label-success" style="font-size: 12px;font-weight: normal">Termine</span></p:outputPanel>
+                                <p:outputPanel rendered="#{current.rdvEtat eq 'Annule'}"><span class="label label-danger" style="font-size: 12px;font-weight: normal">Annule</span></p:outputPanel>
+                                <p:outputPanel rendered="#{current.rdvEtat eq 'En cours'}"><span class="label label-warning" style="font-size: 12px;font-weight: normal">En cours</span></p:outputPanel>                   
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{current.rdvEtat}"  id="etat" filter="true" filterMatchMode="contains" required="true">
+                                    <f:selectItem itemLabel="En cours" itemValue="En cours"/>
+                                    <f:selectItem itemLabel="Annulé" itemValue="Annulée"/>
+                                    <f:selectItem itemLabel="Terminé" itemValue="Terminé"/>                              
+                                </p:selectOneMenu>                                  
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Action" style="text-align: center" exportable="false">
+
+                        <p:commandButton icon="fa fa-trash" action="#{rendezVousController.removerdv}" update="@widgetVar(rdvTable)">
+                            <f:setPropertyActionListener target="#{rendezVousController.entity}" value="#{current}" />
+                            <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
             </p:panel>
-            
-
-                
 
 
 
 
-                </ui:define>
-                </ui:composition>
-                </html>
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>

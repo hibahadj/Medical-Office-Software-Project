@@ -16,7 +16,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "medicament")
@@ -55,6 +54,12 @@ public class Medicament implements Serializable {
 
     public Medicament(Integer medId) {
         this.medId = medId;
+    }
+    
+    public Medicament (Integer medId, String medNom,Integer medPrix) {
+        this.medId = medId;
+        this.medNom = medNom;
+        this.medPrix = medPrix;
     }
 
     public Integer getMedId() {
@@ -97,7 +102,7 @@ public class Medicament implements Serializable {
         this.medPrix = medPrix;
     }
 
-    @XmlTransient
+    
     public List<LienMedOrd> getLienMedOrdList() {
         return lienMedOrdList;
     }

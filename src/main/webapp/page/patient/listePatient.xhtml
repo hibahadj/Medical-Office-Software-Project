@@ -73,7 +73,7 @@
                             <p:rowEditor/>
                         </p:column>
 
-                        <p:column headerText="Actien" style="text-align: center" exportable="false">
+                        <p:column headerText="Action" style="text-align: center" exportable="false">
                             <p:commandButton id="rdv" icon="fa fa-calendar" process="@this" action="#{patientController.onInitRdv()}" 
                                              oncomplete ="PF('addRdvDlg').show();" update="@widgetVar(addRdvDlg)" style="width:25px" >
                                 <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />

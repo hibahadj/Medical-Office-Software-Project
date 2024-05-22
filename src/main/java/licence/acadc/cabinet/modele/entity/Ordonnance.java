@@ -93,7 +93,6 @@ public class Ordonnance implements Serializable {
         this.fkOrdPat = fkOrdPat;
     }
 
-    @XmlTransient
     public List<LienMedOrd> getLienMedOrdList() {
         return lienMedOrdList;
     }

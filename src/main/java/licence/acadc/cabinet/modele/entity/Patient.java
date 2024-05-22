@@ -27,7 +27,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -182,7 +181,6 @@ public class Patient implements Serializable {
         this.patCreeDate = patCreeDate;
     }
 
-    @XmlTransient
     public List<Fichier> getFichierList() {
         return fichierList;
     }
@@ -191,7 +189,7 @@ public class Patient implements Serializable {
         this.fichierList = fichierList;
     }
 
-    @XmlTransient
+    
     public List<Ordonnance> getOrdonnanceList() {
         return ordonnanceList;
     }
@@ -208,7 +206,7 @@ public class Patient implements Serializable {
         this.fkUserPat = fkUserPat;
     }
 
-    @XmlTransient
+    
     public List<Dossier> getDossierList() {
         return dossierList;
     }
@@ -217,7 +215,7 @@ public class Patient implements Serializable {
         this.dossierList = dossierList;
     }
 
-    @XmlTransient
+    
     public List<RendezVous> getRendezVousList() {
         return rendezVousList;
     }

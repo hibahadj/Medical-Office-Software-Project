@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import licence.acadc.cabinet.modele.entity.Dossier;
 import licence.acadc.cabinet.modele.entity.Fichier;
 import licence.acadc.cabinet.modele.entity.LienMedOrd;
 import licence.acadc.cabinet.modele.entity.Ordonnance;
@@ -28,6 +29,7 @@ import org.primefaces.model.file.UploadedFile;
 
 import licence.acadc.cabinet.modele.entity.Patient;
 import licence.acadc.cabinet.modele.entity.RendezVous;
+import licence.acadc.cabinet.modele.facade.DossierFacade;
 import licence.acadc.cabinet.modele.facade.FichierFacade;
 import licence.acadc.cabinet.modele.facade.OrdonnanceFacade;
 import licence.acadc.cabinet.modele.facade.PatientFacade;
@@ -44,6 +46,8 @@ public class PatientController implements Serializable {
     @Inject
     private PatientFacade patientFacade;
     @Inject
+    private DossierFacade dossFacade;
+    @Inject
     private CabUserFacade userFacade;
     @Inject
     private RendezVousFacade rdvFacade;
@@ -56,6 +60,7 @@ public class PatientController implements Serializable {
 
     private Patient entity;
     private List<Patient> listAll;
+    private Dossier entityDoss;
     private RendezVous entityRdv;
     private Fichier entityFile;
     private Ordonnance entityOrd;
@@ -119,6 +124,32 @@ public class PatientController implements Serializable {
         RendezVous rdv = (RendezVous) event.getObject();
         try {
             rdvFacade.edit(rdv);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "Modification effectué avec succès"));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+        }
+    }
+    
+        public void onInitDoss() {
+        entityDoss = new Dossier();
+    }
+
+    public void createDoss() {
+        entityDoss.setFkDossPat(entity);
+        try {
+            dossFacade.create(entityDoss);
+            entity.getDossierList().add(entityDoss);
+            entityDoss = new Dossier();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "Le commentaire a été Crée avec succès"));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+        }
+    }
+
+    public void onRowEditDoss(RowEditEvent event) {
+        Dossier doss = (Dossier) event.getObject();
+        try {
+            dossFacade.edit(doss);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "Modification effectué avec succès"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
@@ -260,6 +291,14 @@ public class PatientController implements Serializable {
 
     public void setEntityRdv(RendezVous entityRdv) {
         this.entityRdv = entityRdv;
+    }
+    
+    public Dossier getEntityDoss() {
+        return entityDoss;
+    }
+
+    public void setEntityDoss(Dossier entityDoss) {
+        this.entityDoss = entityDoss;
     }
 
     public Fichier getEntityFile() {

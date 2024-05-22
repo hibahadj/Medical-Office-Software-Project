@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <p:dialog id="addOrdonanceDlg" widgetVar="addOrdonanceDlg" modal="true" resizable="false" width="70%" responsive="true" styleClass="addRdvDlg">
+        <f:facet name="header">
+            <i class="fa fa-pencil" style="color: #999"/> - Nouvel Ordonance : #{patientController.entity.patNom} #{patientController.entity.patPrenom}
+        </f:facet>
+        <p:panel id="panelOrd" style="background: #f9f9f9">
+            <p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank ui-fluid">
+                <p:outputLabel styleClass="label-style" value="Détails :"/>
+                <p:inputTextarea rows="1" value="#{patientController.entityOrd.ordDc}"  style="width: 600px;" cols="300" counter="displayOrd" maxlength="2000" counterTemplate="{0} characters remaining." autoResize="false" />
+                <h:outputText id="displayOrd" />
+            </p:panelGrid>
+            <p:toolbar  style="border: none;">
+                <f:facet name="left">
+                    <p:commandButton icon="fa fa-check" value="Ajouter" process="panelOrd" action="#{patientController.createOrd()}" update="ordTable panelOrd"/>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton immediate="true" oncomplete="PF('addOrdonanceDlg').hide();" process="@this" value="Fermer" icon="fa fa-close"/>
+                </f:facet>
+            </p:toolbar>
+        </p:panel>
+        <p:panel>
+            <p:dataTable value="#{patientController.entity.ordonnanceList}" var="ord" id="ordTable" widgetVar="ordTable"
+                         rowKey="#{ord.ordId}" rowIndexVar="index" disabledSelection="true" emptyMessage="Liste vide !!!"
+                         paginator="true" rows="5" editable="true" styleClass="table-condensed"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,25,30" paginatorPosition="bottom"
+                         sortBy="#{ord.ordId}" sortOrder="DESCENDING" >
+                <p:ajax event="rowEdit" listener="#{patientController.onRowEditOrd}" update=""/>
+                <p:column headerText="N°">
+                    <h:outputText value="#{ord.ordId}"/>
+                </p:column>
+                <p:column headerText="Date" >
+                    <h:outputText value="#{ord.ordCreeDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy - HH:mm" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Detail" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{ord.ordDc}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{ord.ordDc}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Edit" style="text-align: center" exportable="false">
+                    <f:facet name="header">
+                        <i class="fa fa-pencil" style="color: #999" />
+                    </f:facet>
+                    <p:rowEditor/>
+                </p:column>
+                <p:column style="text-align: center;">
+                    <p:commandButton icon="fa fa-sign-in" action="#{patientController.goToOrd()}">
+                        <f:setPropertyActionListener target="#{patientController.entityOrd}" value="#{ord}" />
+                    </p:commandButton>              
+                </p:column>
+                <p:column headerText="Supprimer" style="text-align: center;">
+                    <p:commandButton icon="fa fa-trash" action="#{patientController.removeOrd}" update="@widgetVar(ordTable)">
+                        <f:setPropertyActionListener target="#{patientController.entityOrd}" value="#{ord}" />
+                        <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
+                    </p:commandButton>              
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </p:dialog>
+</ui:composition>

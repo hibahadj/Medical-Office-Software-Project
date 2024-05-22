@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
@@ -41,9 +42,9 @@ public class Ordonnance implements Serializable {
     @Basic(optional = false)
     @Column(name = "ORD_ID")
     private Integer ordId;
+    @Size(max = 200)
     @Column(name = "ORD_DC")
-    @Temporal(TemporalType.DATE)
-    private Date ordDc;
+    private String ordDc;
     @Column(name = "ORD_CREE_DATE")
     @Temporal(TemporalType.DATE)
     private Date ordCreeDate;
@@ -68,11 +69,11 @@ public class Ordonnance implements Serializable {
         this.ordId = ordId;
     }
 
-    public Date getOrdDc() {
+    public String getOrdDc() {
         return ordDc;
     }
 
-    public void setOrdDc(Date ordDc) {
+    public void setOrdDc(String ordDc) {
         this.ordDc = ordDc;
     }
 

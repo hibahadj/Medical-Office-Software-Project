@@ -7,10 +7,67 @@
       xmlns:p="http://primefaces.org/ui">
     <ui:composition template="../templates/templates.xhtml">
         <ui:define name="Title">
-            Liste de Patients
+            Liste des Ordonnances
         </ui:define>
-        
-    
-    
+        <ui:define name="MyContent">
+            <p:panel id="globalPanel" styleClass="globalPanelStyle">
+                <div class="panel-heading"><i class="fa fa-table"></i> - Liste des Ordonnances </div>
+            </p:panel>
+        </ui:define>
+        <ui:define name="MyContent">
+            <p:panel id="globalPanel" styleClass="globalPanelStyle">
+                <div class="panel-heading"><i class="fa fa-table"></i> - Liste des Ordonnances
+                </div>       
+                <h:form id="mainForm" prependId="false">
+
+                    <p:dataTable value="#{ordonanceController.listAll}" var="current" id="ordTable" widgetVar="ordTable" 
+                                 selection="#{ordonanceController.entity}" rowKey="#{current.ordId}" selectionMode="single"
+                                 paginator="true" rows="5" emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
+                                 rowsPerPageTemplate="5,10,15,20,50,100" sortBy="#{ord.ordId}" sortOrder="DESCENDING" 
+                                 styleClass="table-condensed" >
+                        <p:ajax event="rowEdit" listener="#{ordonanceController.onRowEditOrd}"  update="@widgetVar(ordTable)"/>
+                        <p:ajax event="rowSelect" listener="#{ordonanceController.onRowSelect}" update=""/>
+                        <f:facet name="header">
+                            <i class="fa fa-table" /> <h:outputText value=" Liste des Ordonnances" /> 
+                        </f:facet>     
+                        <p:column headerText="ID Patient" filterBy="#{current.fkOrdPat.patId}" filterMatchMode="contains" sortBy="#{current.fkOrdPat.patId}">
+                            <h:outputText value="#{current.fkOrdPat.patId}" />
+                        </p:column>
+
+                        <p:column headerText="Nom" filterBy="#{current.fkOrdPat.patNom}" filterMatchMode="contains" sortBy="#{current.fkOrdPat.patNom}">
+                            <h:outputText value="#{current.fkOrdPat.patNom}" />
+                        </p:column>
+
+                        <p:column headerText="Prénom" filterBy="#{current.fkOrdPat.patPrenom}" filterMatchMode="contains" sortBy="#{current.fkOrdPat.patPrenom}">
+                            <h:outputText value="#{current.fkOrdPat.patPrenom}" />
+                        </p:column>
+
+                        <p:column headerText="ID Ord" filterBy="#{current.ordId}" filterMatchMode="contains" sortBy="#{current.ordId}">
+                            <h:outputText value="#{current.ordId}" />
+                        </p:column>
+
+                        <p:column headerText="Date Ord" filterBy="#{current.ordCreeDate}" filterMatchMode="contains"
+                                  sortBy="#{current.ordCreeDate}">
+                            <h:outputText value="#{current.ordCreeDate}">
+                                <f:convertDateTime pattern="dd-MM-yyyy - HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Detail" filterBy="#{current.ordDc}" filterMatchMode="contains" sortBy="#{current.ordDc}">
+                            <h:outputText value="#{current.ordDc}" />
+                        </p:column>
+                        <p:column headerText="Actien" style="text-align: center" exportable="false">
+                            <p:commandButton icon="fa fa-trash" action="#{ordonanceController.removeOrd()}" update="@widgetVar(ordTable)">
+                                <f:setPropertyActionListener target="#{ordonanceController.entity}" value="#{current}" />
+                                <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:panel>
+
+        </ui:define>
+
+
     </ui:composition>
 </html>

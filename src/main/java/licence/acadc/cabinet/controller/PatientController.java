@@ -15,7 +15,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import licence.acadc.cabinet.modele.entity.Fichier;
+import licence.acadc.cabinet.modele.entity.LienMedOrd;
+import licence.acadc.cabinet.modele.entity.Ordonnance;
 import licence.acadc.cabinet.modele.facade.CabUserFacade;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
@@ -26,6 +29,7 @@ import org.primefaces.model.file.UploadedFile;
 import licence.acadc.cabinet.modele.entity.Patient;
 import licence.acadc.cabinet.modele.entity.RendezVous;
 import licence.acadc.cabinet.modele.facade.FichierFacade;
+import licence.acadc.cabinet.modele.facade.OrdonnanceFacade;
 import licence.acadc.cabinet.modele.facade.PatientFacade;
 import licence.acadc.cabinet.modele.facade.RendezVousFacade;
 import org.apache.commons.fileupload.util.Streams;
@@ -45,6 +49,8 @@ public class PatientController implements Serializable {
     private RendezVousFacade rdvFacade;
     @Inject
     private FichierFacade fileFacade;
+    @Inject
+    private OrdonnanceFacade ordFacade;
 
     private Date sysDate = new Date();
 
@@ -52,6 +58,7 @@ public class PatientController implements Serializable {
     private List<Patient> listAll;
     private RendezVous entityRdv;
     private Fichier entityFile;
+    private Ordonnance entityOrd;
 
     @PostConstruct
     public void init() {
@@ -173,6 +180,59 @@ public class PatientController implements Serializable {
         fc.responseComplete();
     }
 
+    public void onInitOrdonance() {
+        entityOrd = new Ordonnance();
+    }
+
+    public void createOrd() {
+        entityOrd.setOrdCreeDate(new Date());
+        entityOrd.setFkOrdPat(entity);
+        try {
+            ordFacade.create(entityOrd);
+            entity.getOrdonnanceList().add(entityOrd);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "L'ordenanace a été Crée avec succès"));
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            if (session != null) {
+                session.setAttribute("ordonance", entityOrd);
+            }
+            entityOrd = new Ordonnance();
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/page/Ordonance/Ordonance.xhtml?search=true");
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+        }
+    }
+
+    public void onRowEditOrd(RowEditEvent event) {
+        Ordonnance ord = (Ordonnance) event.getObject();
+        try {
+            ordFacade.edit(ord);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "Modification effectué avec succès"));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+        }
+    }
+
+    public void removeOrd() {
+        ordFacade.remove(entityOrd);
+        entity.getOrdonnanceList().remove(entityOrd);
+    }
+
+    public void goToOrd() {
+        try {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info :", "L'ordenanace a été Crée avec succès"));
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            if (session != null) {
+                session.setAttribute("ordonance", entityOrd);
+            }
+            entityOrd = new Ordonnance();
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/page/Ordonance/Ordonance.xhtml?search=true");
+        } catch (IOException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Erreur Inconnue"));
+        }
+    }
+
     public static String getUserPrincipalRequest() {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         return request.getUserPrincipal().toString();
@@ -208,6 +268,14 @@ public class PatientController implements Serializable {
 
     public void setEntityFile(Fichier entityFile) {
         this.entityFile = entityFile;
+    }
+
+    public Ordonnance getEntityOrd() {
+        return entityOrd;
+    }
+
+    public void setEntityOrd(Ordonnance entityOrd) {
+        this.entityOrd = entityOrd;
     }
 
     public Date getSysDate() {

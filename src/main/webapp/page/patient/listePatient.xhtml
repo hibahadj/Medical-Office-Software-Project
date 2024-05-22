@@ -81,7 +81,11 @@
                             <p:commandButton id="file" update="@widgetVar(addFileDlg)" process="@this" icon="fa fa-chain-broken"  
                                              action="#{patientController.onInitFile()}" oncomplete="PF('addFileDlg').show();" >
                                 <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
-                            </p:commandButton>     
+                            </p:commandButton>  
+                            <p:commandButton id="ord" update="@widgetVar(addOrdonanceDlg)" process="@this" icon="fa fa-file"  
+                                             action="#{patientController.onInitOrdonance()}" oncomplete="PF('addOrdonanceDlg').show();" >
+                                <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
+                            </p:commandButton> 
                             <p:commandButton icon="fa fa-trash" action="#{patientController.removePatient}" update="@widgetVar(patientTable)">
                                 <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
                                 <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
@@ -99,6 +103,9 @@
             </h:form>
             <h:form  prependId="false">
                 <ui:include src="addFileDlg.xhtml"/>
+            </h:form>
+            <h:form  prependId="false">
+                <ui:include src="addOrdonanceDlg.xhtml"/>
             </h:form>
 
         </ui:define>

@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog widgetVar="medocDlg" modal="true" width="50%" closable="true"  id="medocDlg">
+        <f:facet name="header">
+            <i class="fa fa-plus" style="color: #999"> - </i> Ajouter un nouveau médicament :
+        </f:facet>
+        <p:panel  widgetVar="medocDlgCreation" styleClass="ui-fluid" style="border-radius: 0">
+            
+            <p:panelGrid id="panelMedicament" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                
+                <p:outputLabel styleClass="label-style" value="Nom du médicament:" for="nom" />
+                <p:inputText id="nom" required="true" value="#{medicamentController.entity.medNom}" onblur="value = value.toUpperCase()" />
+
+
+                <p:outputLabel  styleClass="label-style" value="Forme du médicament :" for="forme" />
+                <p:selectOneMenu value="#{medicamentController.entity.medForme}"  id="forme" filter="true" filterMatchMode="contains" required="true">
+                    <f:selectItem itemLabel="Voie orale" itemValue="Voie orale"/>
+                    <f:selectItem itemLabel="Voie injectable" itemValue="Voie injectable"/>
+                    <f:selectItem itemLabel="Voie rectale" itemValue="Voie rectale"/>
+                    <f:selectItem itemLabel="Voie topique" itemValue="Voie topique"/>
+                    <f:selectItem itemLabel="Voie nasale" itemValue="Voie nasale"/>
+                    <f:selectItem itemLabel="Voie ophtalmique" itemValue="Voie ophtalmique"/> 
+                </p:selectOneMenu>
+
+                <p:outputLabel  styleClass="label-style" value="Type du médicament :" for="type"/>
+                <p:selectOneMenu value="#{medicamentController.entity.medType}"  id="type" filter="true" filterMatchMode="contains" required="true">
+                    
+                    <f:selectItem itemLabel="Antibiotiques" itemValue="Antibiotiques"/>
+                    <f:selectItem itemLabel="Antifongiques" itemValue="Antifongiques"/>
+                    <f:selectItem itemLabel="Antiparasitaires" itemValue="Antiparasitaires"/>
+                    <f:selectItem itemLabel="Anti-inflammatoires" itemValue="Anti-inflammatoires"/>
+                    <f:selectItem itemLabel="Analgésiques" itemValue="Analgésiques"/>
+                    <f:selectItem itemLabel="Antidépresseurs" itemValue="Antidépresseurs"/>
+                    <f:selectItem itemLabel="Anxiolytiques" itemValue="Anxiolytiques"/>
+                    <f:selectItem itemLabel="Hypnotiques" itemValue="Hypnotiques"/>
+                    <f:selectItem itemLabel="Antihistaminiques" itemValue="Antihistaminiques"/>
+                    <f:selectItem itemLabel="Médicaments cardiovasculaires" itemValue="Médicaments cardiovasculaires"/>
+                    <f:selectItem itemLabel="Médicaments contre le cancer" itemValue="Médicaments contre le cancer"/>
+                    <f:selectItem itemLabel="Médicaments hormonaux" itemValue="Médicaments hormonaux"/>
+                    <f:selectItem itemLabel="Immunosuppresseurs" itemValue="Immunosuppresseurs"/>
+                    
+                </p:selectOneMenu>
+
+                <p:outputLabel styleClass="label-style" value="Prix du médicament :" for="prix"/>
+                <p:inputText id="prix" value="#{medicamentController.entity.medPrix}" required="true"/>
+
+            </p:panelGrid>
+
+        </p:panel>
+
+        <f:facet name="footer">
+            <p:commandButton value="Valider"
+                             validateClient="true"
+                             process="panelMedicament @this"
+                             icon="fa fa-check" update="@(.globalPanelStyle)" styleClass="ui-add-btn"
+                             widgetVar="valideMedicamentBtn"  action="#{medicamentController.createMedicament()}"/>
+            
+            <p:commandButton value="Annuler" icon="fa fa-close"
+                             widgetVar="annulerMedicamentBtn" process="@this" onclick ="PF('medocDlg').hide();"/>
+        </f:facet>
+    </p:dialog>
+
+</ui:composition>
+
+

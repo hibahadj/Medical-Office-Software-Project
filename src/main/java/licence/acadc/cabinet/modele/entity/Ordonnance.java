@@ -23,7 +23,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "ordonnance")
@@ -92,7 +91,6 @@ public class Ordonnance implements Serializable {
         this.fkOrdPat = fkOrdPat;
     }
 
-    @XmlTransient
     public List<LienMedOrd> getLienMedOrdList() {
         return lienMedOrdList;
     }

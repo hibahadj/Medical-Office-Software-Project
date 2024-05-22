@@ -12,7 +12,7 @@
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
                 <div class="panel-heading"><i class="fa fa-table"></i> - Liste de médicaments </div>
-                </p:panel>
+            </p:panel>
         </ui:define>
         <ui:define name="MyContent">
             <p:panel id="globalPanel" styleClass="globalPanelStyle">
@@ -22,51 +22,93 @@
 
                     <p:toolbar style="border-bottom: none;">
                         <f:facet name="left">
-                            <p:commandButton value="Import" icon="ui-icon-plus" onclick="PF('logoDlg').show();"  process="@this"/>
+                            <p:commandButton value="Nouveau" icon="fa fa-plus" oncomplete="PF('medocDlg').show();"
+                                             update="@widgetVar(medocDlg)" styleClass="ui-add-btn"  action="#{medicamentController.onInitMedicament()}"/>
                             <span class="ui-separator">
                                 <span class="ui-icon ui-icon-grip-dotted-vertical" />
                             </span>
                         </f:facet>
                     </p:toolbar>
 
-                    <p:dataTable value="#{MedicamentController.listAll}" var="current" id="MedicamentTable" widgetVar="MedicamentTable" 
-                                 selection="#{MedicamentController.entity}" rowKey="#{current.medId}" selectionMode="single"
+                    <p:dataTable value="#{medicamentController.listAll}" var="current" id="MedicamentTable" widgetVar="MedicamentTable" 
+                                 selection="#{medicamentController.entity}" rowKey="#{current.medId}" selectionMode="single"
                                  editable="true" paginator="true" rows="5"
                                  emptyMessage="Liste Vide !!!!!" paginatorPosition="bottom"
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {CurrentPageReport}"
                                  rowsPerPageTemplate="5,10,15,20,50,100"
                                  styleClass="table-condensed" >
 
-                        <p:ajax event="rowEdit" listener="#{MedicamentController.onRowEditMedicament}"  update="@widgetVar(Medicamenttable)"/>
-                        <p:ajax event="rowSelect" listener="#{MedicamentController.onRowSelect}" update=""/>
+                        <p:ajax event="rowEdit" listener="#{medicamentController.onRowEditMedicament}"  update="@widgetVar(Medicamenttable)"/>
+                        <p:ajax event="rowSelect" listener="#{medicamentController.onRowSelect}" update=""/>
                         <f:facet name="header">
+                            
                             <i class="fa fa-table" /> <h:outputText value="Liste de Medicament" /> 
                         </f:facet>     
                         <p:column headerText="ID Medicament" filterBy="#{current.medId}" filterMatchMode="contains" sortBy="#{current.medId}">
-                            <h:outputText value="#{current.patId}" />
+                            <h:outputText value="#{current.medId}" />
                         </p:column>
 
-                        <p:column headerText="Nom" filterBy="#{current.medNom}" filterMatchMode="contains" sortBy="#{current.medNom}">
-                            <h:outputText value="#{current.medNom}" />
-                        </p:column>
-
-                        <p:column headerText="Forme" filterBy="#{current.medForme}" filterMatchMode="contains" sortBy="#{current.medForme}">
-                            <h:outputText value="#{current.medForme}" />
-                        </p:column>
-
+                       
                         
-                        <p:column headerText="Type" filterBy="#{current.medType}" filterMatchMode="contains"
-                                  sortBy="#{current.medType}">
+                        <p:column headerText="Nom" filterBy="#{current.medNom}" filterMatchMode="contains"
+                                  sortBy="#{current.medNom}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.medNom}" />                   
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{current.medNom}"/>                                   
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Forme" filterBy="#{current.medForme}" filterMatchMode="contains" sortBy="#{current.medForme}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.medForme}" />
+                                </f:facet>
+                                
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{medicamentController.entity.medForme}"  id="forme" filter="true" filterMatchMode="contains" required="true">
+                               <f:selectItem itemLabel="Voie orale" itemValue="Voie orale"/>
+                               <f:selectItem itemLabel="Voie injectable" itemValue="Voie injectable"/>
+                               <f:selectItem itemLabel="Voie rectale" itemValue="Voie rectale"/>
+                               <f:selectItem itemLabel="Voie topique" itemValue="Voie topique"/>
+                               <f:selectItem itemLabel="Voie nasale" itemValue="Voie nasale"/>
+                               <f:selectItem itemLabel="Voie ophtalmique" itemValue="Voie ophtalmique"/> 
+                                   </p:selectOneMenu>
+                                    
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Type" filterBy="#{current.medType}" filterMatchMode="contains" sortBy="#{current.medType}">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{current.medType}" />
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{current.medType}"/>
+                    <p:selectOneMenu value="#{medicamentController.entity.medType}"  id="type" filter="true" filterMatchMode="contains" required="true">
+                    
+                    <f:selectItem itemLabel="Antibiotiques" itemValue="Antibiotiques"/>
+                    <f:selectItem itemLabel="Antifongiques" itemValue="Antifongiques"/>
+                    <f:selectItem itemLabel="Antiparasitaires" itemValue="Antiparasitaires"/>
+                    <f:selectItem itemLabel="Anti-inflammatoires" itemValue="Anti-inflammatoires"/>
+                    <f:selectItem itemLabel="Analgésiques" itemValue="Analgésiques"/>
+                    <f:selectItem itemLabel="Antidépresseurs" itemValue="Antidépresseurs"/>
+                    <f:selectItem itemLabel="Anxiolytiques" itemValue="Anxiolytiques"/>
+                    <f:selectItem itemLabel="Hypnotiques" itemValue="Hypnotiques"/>
+                    <f:selectItem itemLabel="Antihistaminiques" itemValue="Antihistaminiques"/>
+                    <f:selectItem itemLabel="Médicaments cardiovasculaires" itemValue="Médicaments cardiovasculaires"/>
+                    <f:selectItem itemLabel="Médicaments contre le cancer" itemValue="Médicaments contre le cancer"/>
+                    <f:selectItem itemLabel="Médicaments hormonaux" itemValue="Médicaments hormonaux"/>
+                    <f:selectItem itemLabel="Immunosuppresseurs" itemValue="Immunosuppresseurs"/>
+                    
+                </p:selectOneMenu>              
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-
+                        
                         <p:column headerText="Prix" filterBy="#{current.medPrix}" filterMatchMode="contains"
                                   sortBy="#{current.medPrix}">
                             <p:cellEditor>
@@ -78,26 +120,30 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
+                        
 
-                        <p:column width="8%" headerText="Action" style="text-align: center" exportable="false">
+                        <p:column width="8%" headerText="Edit" style="text-align: center" exportable="false">
                             <f:facet name="header">
                                 <i class="fa fa-pencil" style="color: #999" />
                             </f:facet>
                             <p:rowEditor/>
                         </p:column>
 
-                        <p:column width="8%" style="text-align: center" exportable="false">
-                            <f:facet name="header">
-                                <i class="fa fa-trash" style="color: #999"/>
-                            </f:facet>
-                            <p:commandButton icon="fa fa-trash" action="#{MedicamentController.removeMedicament}" update="@widgetVar(MedicamentTable)">
-                                <f:setPropertyActionListener target="#{MedicamentController.entity}" value="#{current}" />
+                        <p:column headerText="Action" style="text-align: center" exportable="false">
+                           
+                            <p:commandButton icon="fa fa-trash" action="#{medicamentController.removeMedicament}" update="@widgetVar(MedicamentTable)">
+                                <f:setPropertyActionListener target="#{medicamentController.entity}" value="#{current}" />
                                 <p:confirm header="Confirmation" message="Confirmez vous la suppression de l'enregistrement ?"  icon="ui-icon-alert"  />
                             </p:commandButton>
                         </p:column>
+                        
                     </p:dataTable>
                 </h:form>
             </p:panel>
+            
+ <h:form  prependId="false">
+                <ui:include src="addMedocDlg.xhtml"/>
+            </h:form>
         </ui:define>
 
 

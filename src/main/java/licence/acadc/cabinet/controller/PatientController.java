@@ -84,6 +84,10 @@ public class PatientController implements Serializable {
     }
 
     public void createPatient() {
+        if(patientFacade.findByNomPreDate(entity.getPatNom(), entity.getPatPrenom(), entity.getPatDdn())){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur :", "Patient existe deja"));
+            return;
+        }
         entity.setPatCreeDate(sysDate);
         entity.setFkUserPat(userFacade.findByUsername(getUserPrincipalRequest()));
         patientFacade.create(entity);

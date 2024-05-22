@@ -74,6 +74,10 @@
                         </p:column>
 
                         <p:column headerText="Action" style="text-align: center" exportable="false">
+                            <p:commandButton id="doss" icon="fa fa-folder" process="@this" action="#{patientController.onInitDoss()}" 
+                                             oncomplete ="PF('addDossDlg').show();" update="@widgetVar(addDossDlg)" style="width:25px" >
+                                <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
+                            </p:commandButton>
                             <p:commandButton id="rdv" icon="fa fa-calendar" process="@this" action="#{patientController.onInitRdv()}" 
                                              oncomplete ="PF('addRdvDlg').show();" update="@widgetVar(addRdvDlg)" style="width:25px" >
                                 <f:setPropertyActionListener target="#{patientController.entity}" value="#{current}" />
@@ -97,6 +101,9 @@
 
             <h:form  prependId="false">
                 <ui:include src="addPatientDlg.xhtml"/>
+            </h:form>
+            <h:form  prependId="false">
+                <ui:include src="addDossDlg.xhtml"/>
             </h:form>
             <h:form  prependId="false">
                 <ui:include src="addRdvDlg.xhtml"/>

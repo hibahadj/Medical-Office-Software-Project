@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <p:dialog id="addDossDlg" widgetVar="addDossDlg" modal="true" resizable="false" width="70%" responsive="true" styleClass="addDossDlg">
+        <f:facet name="header">
+            <i class="fa fa-pencil" style="color: #999"/> - Liste comptes rendus : #{patientController.entity.patNom} #{patientController.entity.patPrenom}
+        </f:facet>
+        <p:panel id="panelDoss" style="background: #f9f9f9">
+            <p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-8,ui-grid-col-1,ui-grid-col-3" styleClass="ui-panelgrid-blank ui-fluid">
+                <p:outputLabel styleClass="label-style" value="Titre :" for="titre"/>
+                <p:inputText id="titre" required="true" value="#{patientController.entityDoss.dossNom}" style="width: 200px;" onblur="value = value.toUpperCase()" />
+
+                <p:outputLabel styleClass="label-style" value="Détails :" for="descDoss"/>
+                <p:inputTextarea id="descDoss" rows="1" value="#{patientController.entityDoss.dossComm}"  style="width: 600px;" cols="300" counter="displayDoss" maxlength="2000" counterTemplate="{0} characters remaining." autoResize="false" />
+                <h:outputText id="displayDoss" />
+            </p:panelGrid>
+            <p:toolbar  style="border: none;">
+                <f:facet name="left">
+                    <p:commandButton icon="fa fa-check" value="Ajouter" process="panelDoss" action="#{patientController.createDoss()}" update="dossTable panelDoss"/>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton immediate="true" oncomplete="PF('addDossDlg').hide();" process="@this" value="Fermer" icon="fa fa-close"/>
+                </f:facet>
+            </p:toolbar>
+
+        </p:panel>
+        <p:panel  style="border-radius: 0">
+            <p:dataTable value="#{patientController.entity.dossierList}" var="doss" id="dossTable" widgetVar="dossTable"
+                         rowKey="#{doss.dossId}" rowIndexVar="index" disabledSelection="true" emptyMessage="Liste vide !!!"
+                         paginator="true" rows="5" editable="true" styleClass="table-condensed"
+                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,20,25,30" paginatorPosition="bottom"
+                         sortBy="#{doss.dossId}" sortOrder="DESCENDING" >
+                <p:ajax event="rowEdit" listener="#{patientController.onRowEditDoss}" update=""/>
+                <p:column headerText="N°">
+                    <h:outputText value="#{doss.dossId}"/>
+                </p:column>
+                <p:column headerText="Title" >
+                    <h:outputText value="#{doss.dossNom}"/>
+                </p:column>
+                <p:column headerText="Compte rendu" >
+                    <h:outputText value="#{doss.dossComm}"/>
+                </p:column>
+                <p:column headerText="Action" style="text-align: center" exportable="false">
+                    <f:facet name="header">
+                        <i class="fa fa-pencil" style="color: #999" />
+                    </f:facet>
+                    <p:rowEditor/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </p:dialog>
+</ui:composition>

@@ -51,11 +51,25 @@
                         </p:column>
 
                         <p:column headerText="Nom" filterBy="#{current.patNom}" filterMatchMode="contains" sortBy="#{current.patNom}">
-                            <h:outputText value="#{current.patNom}" />
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.patNom}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{current.patNom}"/>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
 
                         <p:column headerText="Prénom" filterBy="#{current.patPrenom}" filterMatchMode="contains" sortBy="#{current.patPrenom}">
-                            <h:outputText value="#{current.patPrenom}" />
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.patPrenom}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{current.patPrenom}"/>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
 
                         <p:column headerText="Date Nis" style="text-align: center;">
@@ -77,15 +91,36 @@
                         </p:column>
 
                         <p:column headerText="Genre" filterBy="#{current.patGenre}" filterMatchMode="contains" sortBy="#{current.patGenre}">
-                            <h:outputText value="#{current.patGenre}" />
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.patGenre}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{current.patGenre}"/>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
 
                         <p:column headerText="Sang" filterBy="#{current.patSang}" filterMatchMode="contains" sortBy="#{current.patSang}">
-                            <h:outputText value="#{current.patSang}" />
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.patSang}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{current.patSang}"/>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
 
                         <p:column headerText="Tel" filterBy="#{current.patTel}" filterMatchMode="contains" sortBy="#{current.patTel}">
-                            <h:outputText value="#{current.patTel}" />
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{current.patTel}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{current.patTel}"/>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
 
                         <p:column width="8%" headerText="Edit" style="text-align: center" exportable="false">

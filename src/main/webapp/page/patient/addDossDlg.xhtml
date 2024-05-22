@@ -39,10 +39,24 @@
                     <h:outputText value="#{doss.dossId}"/>
                 </p:column>
                 <p:column headerText="Title" >
-                    <h:outputText value="#{doss.dossNom}"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{doss.dossNom}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{doss.dossNom}"/>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
                 <p:column headerText="Compte rendu" >
-                    <h:outputText value="#{doss.dossComm}"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{doss.dossComm}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{doss.dossComm}"/>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
                 <p:column headerText="Action" style="text-align: center" exportable="false">
                     <f:facet name="header">

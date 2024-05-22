@@ -1,5 +1,7 @@
 # Medical Office management Software
 
+### Link to the report, presentation, Configuration needs... --> https://drive.google.com/drive/folders/1R1Fldm4OECHVs2Jb5DDoEdD-zYHgehmc?usp=sharing  
+
 ###### Description
 
  **Management Software for a Medical Office**. This project aims to develop a comprehensive and customized software solution for medical offices. The tool is designed to automate administrative tasks, improve the management of appointments and medical files, and facilitate access to relevant information, thereby increasing operational efficiency and care coordination. The result is a better experience for both reception workers and doctors.

@@ -41,6 +41,10 @@
                         <p:ajax event="rowSelect" listener="#{patientController.onRowSelect}" update=""/>
                         <f:facet name="header">
                             <i class="fa fa-table" /> <h:outputText value=" Liste des Patients" /> 
+                            <div align="right">	             
+                                <p:commandButton  id="toggler" type="button" value="Options" style="width: 120px" icon="fa fa-align-justify" />
+                                <p:columnToggler  datasource="patientTable" trigger="toggler" />
+                            </div>
                         </f:facet>     
                         <p:column headerText="ID Patient" filterBy="#{current.patId}" filterMatchMode="contains" sortBy="#{current.patId}">
                             <h:outputText value="#{current.patId}" />
@@ -54,6 +58,12 @@
                             <h:outputText value="#{current.patPrenom}" />
                         </p:column>
 
+                        <p:column headerText="Date Nis" style="text-align: center;">
+                            <h:outputText value="#{current.patDdn}">
+                                <f:convertDateTime pattern="dd-MM-yyyy - HH:mm" />
+                            </h:outputText>
+                        </p:column>
+
                         <p:column headerText="Adresse" filterBy="#{current.patAdresse}" filterMatchMode="contains"
                                   sortBy="#{current.patAdresse}">
                             <p:cellEditor>
@@ -64,6 +74,18 @@
                                     <p:inputText value="#{current.patAdresse}"/>
                                 </f:facet>
                             </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Genre" filterBy="#{current.patGenre}" filterMatchMode="contains" sortBy="#{current.patGenre}">
+                            <h:outputText value="#{current.patGenre}" />
+                        </p:column>
+
+                        <p:column headerText="Sang" filterBy="#{current.patSang}" filterMatchMode="contains" sortBy="#{current.patSang}">
+                            <h:outputText value="#{current.patSang}" />
+                        </p:column>
+
+                        <p:column headerText="Tel" filterBy="#{current.patTel}" filterMatchMode="contains" sortBy="#{current.patTel}">
+                            <h:outputText value="#{current.patTel}" />
                         </p:column>
 
                         <p:column width="8%" headerText="Edit" style="text-align: center" exportable="false">
